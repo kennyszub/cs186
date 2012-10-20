@@ -56,8 +56,8 @@ typedef struct
 	 * CS186 TODO: Add any data you need to manage in order to implement
 	 * your buffer replacement strategies here.
 	 */
-  BufferDesc lastUnpinned;
-  BufferDesc firstUnpinned;
+  int lastUnpinned;
+  int firstUnpinned;
 
 } BufferStrategyControl;
 
@@ -304,9 +304,6 @@ BufferUnpinned(int bufIndex)
    * StrategyControl global variable from inside this function.
    * This function was added by the GSIs.
 	 */
-
-  
-  /*
   int last = StrategyControl->lastUnpinned;
   if (last = -1) {
     StrategyControl->firstUnpinned = bufIndex;
@@ -315,7 +312,7 @@ BufferUnpinned(int bufIndex)
   buf->next = -1;
   BufferDescriptors[lastUnpinned]->next = bufIndex;
   StrategyControl->lastUnpinned = bufIndex;
-  */
+  
 
 	LWLockRelease(BufFreelistLock);
 }
@@ -450,7 +447,7 @@ StrategyInitialize(bool init)
 		StrategyControl->numBufferAllocs = 0;
 
 		/* CS186 TODO: Initialize any data you added to StrategyControlData here */
-    StrategyControl->lastUnpinned = NULL;
+    StrategyControl->lastUnpinned = -1;
 	}
 	else
 		Assert(!init);

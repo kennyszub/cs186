@@ -24,6 +24,7 @@
  * POLICY_LRU, POLICY_MRU, or POLICY_2Q.
  */
 int BufferReplacementPolicy;
+int unpinnedBefore[NBuffers + NUM_BUFFER_PARTITIONS] = {};
 
 /*
  * CS186: Shared freelist control information. This is a data
@@ -56,8 +57,8 @@ typedef struct
 	 * CS186 TODO: Add any data you need to manage in order to implement
 	 * your buffer replacement strategies here.
 	 */
-  int lastUnpinned;
-  int firstUnpinned;
+  BufferDesc lastUnpinned;
+  BufferDesc firstUnpinned;
 
 } BufferStrategyControl;
 
@@ -304,6 +305,9 @@ BufferUnpinned(int bufIndex)
    * StrategyControl global variable from inside this function.
    * This function was added by the GSIs.
 	 */
+
+  
+  /*
   int last = StrategyControl->lastUnpinned;
   if (last = -1) {
     StrategyControl->firstUnpinned = bufIndex;
@@ -312,6 +316,26 @@ BufferUnpinned(int bufIndex)
   buf->next = -1;
   BufferDescriptors[lastUnpinned]->next = bufIndex;
   StrategyControl->lastUnpinned = bufIndex;
+  */
+
+  // if already in unpinned list, set neighbors to point to each other
+  if (unpinnedBefore[bufIndex] != 0) {
+    BufferDesc *previous = &buf->previous;
+    BufferDesc *next = &buf->next;
+    previous->next = next;
+    next->previous = previous;
+  } else {
+    unpinnedBefore[bufIndex] = 1;
+  }
+
+  BufferDesc *last = &StrategyControl->lastUnpinned;
+  if (*last == NULL) { // if first time, then set firstUnpinned to this buffer
+    StrategyControl->firstUnpinned = *buf;
+  }
+  buf->previous = *last;
+  buf->next = NULL;
+  last->next= *buf;
+  StrategyControl->lastUnpinned = *buf;
   
 
 	LWLockRelease(BufFreelistLock);
@@ -447,7 +471,8 @@ StrategyInitialize(bool init)
 		StrategyControl->numBufferAllocs = 0;
 
 		/* CS186 TODO: Initialize any data you added to StrategyControlData here */
-    StrategyControl->lastUnpinned = -1;
+    StrategyControl->lastUnpinned = NULL;
+    StrategyControl->firstUnpinned = NULL;
 	}
 	else
 		Assert(!init);

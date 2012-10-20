@@ -24,6 +24,7 @@
  * POLICY_LRU, POLICY_MRU, or POLICY_2Q.
  */
 int BufferReplacementPolicy;
+int unpinnedBefore[NBuffers + NUM_BUFFER_PARTITIONS] = {};
 
 /*
  * CS186: Shared freelist control information. This is a data
@@ -317,6 +318,26 @@ BufferUnpinned(int bufIndex)
   StrategyControl->lastUnpinned = bufIndex;
   */
 
+  // if already in unpinned list, set neighbors to point to each other
+  if (unpinnedBefore[bufIndex] != 0) {
+    BufferDesc *previous = &buf->previous;
+    BufferDesc *next = &buf->next;
+    previous->next = next;
+    next->previous = previous;
+  } else {
+    unpinnedBefore[bufIndex] = 1;
+  }
+
+  BufferDesc *last = &StrategyControl->lastUnpinned;
+  if (*last == NULL) { // if first time, then set firstUnpinned to this buffer
+    StrategyControl->firstUnpinned = *buf;
+  }
+  buf->previous = *last;
+  buf->next = NULL;
+  last->next= *buf;
+  StrategyControl->lastUnpinned = *buf;
+  
+
 	LWLockRelease(BufFreelistLock);
 }
 
@@ -451,6 +472,7 @@ StrategyInitialize(bool init)
 
 		/* CS186 TODO: Initialize any data you added to StrategyControlData here */
     StrategyControl->lastUnpinned = NULL;
+    StrategyControl->firstUnpinned = NULL;
 	}
 	else
 		Assert(!init);

@@ -59,6 +59,14 @@ typedef struct
 
 } BufferStrategyControl;
 
+/*Linked list used for LRU and MRU Replacement Strategies */
+typedef struct {
+  Node *next;
+  Node *previous;
+  int bufferIndex;
+} Node;
+  
+
 /* Pointers to shared state */
 static BufferStrategyControl *StrategyControl = NULL;
 
@@ -94,6 +102,8 @@ typedef struct BufferAccessStrategyData
 	 */
 	Buffer		buffers[1];		/* VARIABLE SIZE ARRAY */
 } BufferAccessStrategyData;
+
+
 
 
 /* Prototypes for internal functions */

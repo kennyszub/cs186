@@ -243,36 +243,54 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
 		 * above.
 		 */
 		else if (BufferReplacementPolicy == POLICY_LRU)
-		{      
-      /* TODO change header file. use pointers to buffers instead of pointers to buffindexes*/
-      bufIndex = StrategyControl->firstUnpinned;
-      buf = &BufferDescriptors[bufIndex];
-    while (buf->refcount != 0) {    
-       buf->previous = -1;
-       buf = &BufferDescriptors[buf->next]; 
-    }
-    int newLRU
-       StrategyControl->firstUnpinned = newLRU; //update firstUnpinned
-       BufferDescriptors[newLRU]->previous = -1; //change firstUnpinned's prev = -1
-       resultIndex = bufIndex; //pick bufIndex as buffer to replace!
-      } 
-        
-        
-			elog(ERROR, "LRU unimplemented");
-		}
-		else if (BufferReplacementPolicy == POLICY_MRU)
-		{
-			elog(ERROR, "MRU unimplemented");
-		}
-		else if (BufferReplacementPolicy == POLICY_2Q)
-		{
-			elog(ERROR, "2Q unimplemented");
-		}
-		else
-		{
-			elog(ERROR, "invalid buffer pool replacement policy %d", BufferReplacementPolicy);
-		}
-
+		  {      
+		    BufferDesc *newBuf;
+		    buf = &StrategyControl->firstUnpinned;
+		    while (buf->refcount != 0) {    
+		      buf->previous = NULL;
+		      newBuf = &buf->next;
+		      buf->next = NULL;
+		      unpinnedBefore[buf->buf_id] = 0;
+		      buf = &newBuf;
+		    }
+		    //so now buf = the buffer we've selected for replacement
+		    StrategyControl->firstUnpinned = &buf->next; //update first unpinned
+		    StrategyControl->firstUnpinned->previous = NULL; //set firstUnpinned's prev to null
+		    buf->next = NULL; //disconnect the chosen buf from linked list
+		    buf->previous = NULL; //by setting next, prev to null
+		    unpinnedBefore[buf->buf_id] = 0;
+		    resultIndex = buf->buf_id; //return chosen buf
+		  } 
+	}
+	else if (BufferReplacementPolicy == POLICY_MRU)
+	  {
+	    buf = &StrategyControl->lastUnpinned;
+	    BufferDesc *newBuf;
+	    while (buf->refcount != 0) {    
+	      buf->next = NULL;
+	      newBuf = &buf->previous;
+	      buf->previous = NULL;
+	      unpinnedBefore[buf->buf_id] = 0;
+	      buf = &newBuf;
+	    }
+	    //so now buf = the buffer we've selected for replacement
+	    StrategyControl->lastUnpinned = &buf->previous; //update lastUnpinned
+	    StrategyControl->lastUnpinned->next = NULL; //set lastUnpinned's prev to null
+	    buf->next = NULL; //disconnect the chosen buf from linked list
+	    buf->previous = NULL; //by setting next, prev to null
+	    unpinnedBefore[buf->buf_id] = 0;
+	    resultIndex = buf->buf_id; //return chosen buf 
+	    //  elog(ERROR, "MRU unimplemented");
+	  }
+	else if (BufferReplacementPolicy == POLICY_2Q)
+	  {
+	    elog(ERROR, "2Q unimplemented");
+	  }
+	else
+	  {
+	    elog(ERROR, "invalid buffer pool replacement policy %d", BufferReplacementPolicy);
+	  }
+	
     /*
      * CS186 Grading LOG - DON'T TOUCH
      * Don't output logs starting with "GRADING" by yourself; they are for grading purposes only.

@@ -147,8 +147,8 @@ typedef struct sbufdesc
 	/* CS186 TODO: Add any data you need to manage in order to implement
 	 * your buffer replacement strategies here.
 	 */
-  int next;
-  int previous;
+  struct sbufdesc *next;
+  struct sbufdesc *previous;
 
 } BufferDesc;
 

@@ -180,139 +180,145 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
 		  buf->previous = NULL;
 		  
 		  
-			resultIndex = bufIndex;
-			break;
+		  resultIndex = bufIndex;
+		  break;
 		}
 		UnlockBufHdr(buf);
 	}
-
+	
 	/*
 	 * Nothing on the freelist, so use the buffer replacement policy
 	 * to select a buffer to evict.
 	 */
 	if (resultIndex == -1)
 	{
-		if (BufferReplacementPolicy == POLICY_CLOCK)
+	  if (BufferReplacementPolicy == POLICY_CLOCK)
+	    {
+	      /* Run the "clock sweep" algorithm */
+	      trycounter = NBuffers;
+	      for (;;)
 		{
-			/* Run the "clock sweep" algorithm */
-			trycounter = NBuffers;
-			for (;;)
-			{
-				bufIndex = StrategyControl->nextVictimBuffer;
-				buf = &BufferDescriptors[bufIndex];
-
-				/*
-				 * If the clock sweep hand has reached the end of the
-				 * buffer pool, start back at the beginning.
-				 */
-				if (++StrategyControl->nextVictimBuffer >= NBuffers)
-				{
-					StrategyControl->nextVictimBuffer = 0;
-					StrategyControl->completePasses++;
-				}
-
-				/*
-				 * If the buffer is pinned or has a nonzero usage_count, we cannot use
-				 * it; decrement the usage_count (unless pinned) and keep scanning.
-				 */
-				LockBufHdr(buf);
-				if (buf->refcount == 0)
-				{
-					if (buf->usage_count > 0)
-					{
-						buf->usage_count--;
-						trycounter = NBuffers;
-					}
-					else
-					{
-						/* Found a usable buffer */
-						resultIndex = bufIndex;
-						break;
-					}
-				}
-				else if (--trycounter == 0)
-				{
-					/*
-					 * We've scanned all the buffers without making any state changes,
-					 * so all the buffers are pinned (or were when we looked at them).
-					 * We could hope that someone will free one eventually, but it's
-					 * probably better to fail than to risk getting stuck in an
-					 * infinite loop.
-					 */
-					UnlockBufHdr(buf);
-					elog(ERROR, "no unpinned buffers available");
-				}
-				UnlockBufHdr(buf);
-			}
-		}
-		/*
-		 * CS186 TODO: Add code here to implement the LRU, MRU and 2Q buffer
-		 * replacement policies. Once you've selected a buffer to
-		 * evict, assign its index in the BufferDescriptors array to
-		 * "resultIndex". You can model your code on the CLOCK code
-		 * above.
-		 */
-		else if (BufferReplacementPolicy == POLICY_LRU)
-		  {      
-		    printf("got here 3\n");
-		    buf = StrategyControl->firstUnpinned;
-		    //  LockBufHdr(buf);
-		    while (buf->refcount != 0) {    
-		      buf->previous = NULL;
-		      if (buf->next == NULL) {
-			printf("all buffers in list are pinned\n");
-			/*
-			 * We've scanned all the buffers without making any state changes,
-			 * so all the buffers are pinned (or were when we looked at them).
-			 * We could hope that someone will free one eventually, but it's
-			 * probably better to fail than to risk getting stuck in an
-			 * infinite loop.
-			 */
-			//	UnlockBufHdr(buf);
-			elog(ERROR, "no unpinned buffers available");
-			break;
-		      } else {
-			newBuf = buf->next;
-			buf->next = NULL;
-			//StrategyControl->unpinnedBefore[buf->buf_id] = 0;
-			//	UnlockBufHdr(buf);
-			buf = newBuf;
-			printf("going to replace %d\n", buf->buf_id);
-			//	LockBufHdr(buf);
-		      }
+		  bufIndex = StrategyControl->nextVictimBuffer;
+		  buf = &BufferDescriptors[bufIndex];
+		  
+		  /*
+		   * If the clock sweep hand has reached the end of the
+		   * buffer pool, start back at the beginning.
+		   */
+		  if (++StrategyControl->nextVictimBuffer >= NBuffers)
+		    {
+		      StrategyControl->nextVictimBuffer = 0;
+		      StrategyControl->completePasses++;
 		    }
-		    printf("selected buf for replacement\n");
-		    //so now buf = the buffer we've selected for replacement
-		    StrategyControl->firstUnpinned = buf->next; //update first unpinned
-		    StrategyControl->firstUnpinned->previous = NULL; //set firstUnpinned's prev to null
-		    buf->next = NULL; //disconnect the chosen buf from linked list
-		    buf->previous = NULL; //by setting next, prev to null
-		    //StrategyControl->unpinnedBefore[buf->buf_id] = 0;
-		    resultIndex = buf->buf_id; //return chosen buf
-		  } 
-	
-	else if (BufferReplacementPolicy == POLICY_MRU)
-	  {
-	    buf = StrategyControl->lastUnpinned;
 
-	    while (buf->refcount != 0) {    
-	      buf->next = NULL;
-	      newBuf = buf->previous;
-	      buf->previous = NULL;
-	      //StrategyControl->unpinnedBefore[buf->buf_id] = 0;
-	      buf = newBuf;
+		  /*
+		   * If the buffer is pinned or has a nonzero usage_count, we cannot use
+		   * it; decrement the usage_count (unless pinned) and keep scanning.
+		   */
+		  LockBufHdr(buf);
+		  if (buf->refcount == 0)
+		    {
+		      if (buf->usage_count > 0)
+			{
+			  buf->usage_count--;
+			  trycounter = NBuffers;
+			}
+		      else
+			{
+			  /* Found a usable buffer */
+			  resultIndex = bufIndex;
+			  break;
+			}
+		    }
+		  else if (--trycounter == 0)
+		    {
+		      /*
+		       * We've scanned all the buffers without making any state changes,
+		       * so all the buffers are pinned (or were when we looked at them).
+		       * We could hope that someone will free one eventually, but it's
+		       * probably better to fail than to risk getting stuck in an
+		       * infinite loop.
+		       */
+		      UnlockBufHdr(buf);
+		      elog(ERROR, "no unpinned buffers available");
+		    }
+		  UnlockBufHdr(buf);
+		}
 	    }
-	    //so now buf = the buffer we've selected for replacement
-	    StrategyControl->lastUnpinned = buf->previous; //update lastUnpinned
-	    StrategyControl->lastUnpinned->next = NULL; //set lastUnpinned's prev to null
-	    buf->next = NULL; //disconnect the chosen buf from linked list
-	    buf->previous = NULL; //by setting next, prev to null
-	    //StrategyControl->unpinnedBefore[buf->buf_id] = 0;
-	    resultIndex = buf->buf_id; //return chosen buf 
+	  /*
+	   * CS186 TODO: Add code here to implement the LRU, MRU and 2Q buffer
+	   * replacement policies. Once you've selected a buffer to
+	   * evict, assign its index in the BufferDescriptors array to
+	   * "resultIndex". You can model your code on the CLOCK code
+	   * above.
+	   */
+	  else if (BufferReplacementPolicy == POLICY_LRU)
+	    {      
+	      printf("got here 3\n");
+	      buf = StrategyControl->firstUnpinned;
+	      //  LockBufHdr(buf);
+	      while (buf->refcount != 0) {
+		printf("the buffer we want to evict is pinned, refcount !=0\n");
+		buf->previous = NULL;
+		if (buf->next == NULL) {
+		  printf("all buffers in list are pinned\n");
+		  /*
+		   * We've scanned all the buffers without making any state changes,
+		   * so all the buffers are pinned (or were when we looked at them).
+		   * We could hope that someone will free one eventually, but it's
+		   * probably better to fail than to risk getting stuck in an
+		   * infinite loop.
+		   */
+		  //	UnlockBufHdr(buf);
+		  elog(ERROR, "no unpinned buffers available");
+		  break;
+		} else {
+		  newBuf = buf->next;
+		  buf->next = NULL;
+		  //StrategyControl->unpinnedBefore[buf->buf_id] = 0;
+		  //	UnlockBufHdr(buf);
+		  buf = newBuf;
+		  printf("going to replace %d\n", buf->buf_id);
+		  //	LockBufHdr(buf);
+		}
+	      }
+	      printf("selected buf for replacement\n");
+	      //so now buf = the buffer we've selected for replacement
+	      StrategyControl->firstUnpinned = buf->next; //update first unpinned
+	      if (StrategyControl->firstUnpinned != NULL) {
+		StrategyControl->firstUnpinned->previous = NULL; //set firstUnpinned's prev to null
+	      } else {
+		StrategyControl->lastUnpinned = NULL; //if firstUnpinned = null, there's nothing left in list. lastunpinned should also be null
+	      }
+	      printf("passed the statement\n");
+	      buf->next = NULL; //disconnect the chosen buf from linked list
+	      buf->previous = NULL; //by setting next, prev to null
+	      //StrategyControl->unpinnedBefore[buf->buf_id] = 0;
+	      resultIndex = buf->buf_id; //return chosen buf
+	    } 
+	  
+	  else if (BufferReplacementPolicy == POLICY_MRU)
+	    {
+	      buf = StrategyControl->lastUnpinned;
+	      
+	      while (buf->refcount != 0) {    
+		buf->next = NULL;
+		newBuf = buf->previous;
+		buf->previous = NULL;
+		//StrategyControl->unpinnedBefore[buf->buf_id] = 0;
+		buf = newBuf;
+	      }
+	      //so now buf = the buffer we've selected for replacement
+	      StrategyControl->lastUnpinned = buf->previous; //update lastUnpinned
+	      StrategyControl->lastUnpinned->next = NULL; //set lastUnpinned's prev to null
+	      buf->next = NULL; //disconnect the chosen buf from linked list
+	      buf->previous = NULL; //by setting next, prev to null
+	      //StrategyControl->unpinnedBefore[buf->buf_id] = 0;
+	      resultIndex = buf->buf_id; //return chosen buf 
 	    //  elog(ERROR, "MRU unimplemented");
-	  }
-	else if (BufferReplacementPolicy == POLICY_2Q)
-	  {
+	    }
+	  else if (BufferReplacementPolicy == POLICY_2Q)
+	    {
 	    elog(ERROR, "2Q unimplemented");
 	  }
 	else
@@ -343,6 +349,7 @@ BufferUnpinned(int bufIndex)
 {
   printf("beginning bufferUnpinned \n");
 	volatile BufferDesc *buf = &BufferDescriptors[bufIndex];
+	volatile BufferDesc *first;
 	volatile BufferDesc *last;
 
 	if (!LWLockConditionalAcquire(BufFreelistLock, LW_EXCLUSIVE))
@@ -383,7 +390,7 @@ BufferUnpinned(int bufIndex)
       printf("adding buff which is alrady in list, at beginning\n");
     }
   } else if (previous == NULL) { //next == NULL, prev == null, buf is new to list
-  printf("got here 4\n");    
+    printf("got here 4\n");    
       
     /* else if (!(buf->next == NULL && buf->previous == NULL)) { //in middle of list
     printf("got here blah\n");
@@ -397,14 +404,18 @@ BufferUnpinned(int bufIndex)
    // StrategyControl->unpinnedBefore[bufIndex] = 1;
   //}
 
+    first = StrategyControl->firstUnpinned;
     last = StrategyControl->lastUnpinned;
-    if (last == NULL) { // if first time, then set firstUnpinned to this buffer
+    if (first == NULL) { // if first time, then set firstUnpinned to this buffer
       StrategyControl->firstUnpinned = buf;
-    } else {
-      last->next = buf; //if not first time, set last-> next to current buf
-    }
-    buf->previous = last;
+    } //else {
+    // last->next = buf; //if not first time, set last-> next to current buf
+    // }
+    buf->previous = StrategyControl->lastUnpinned;
     buf->next = NULL;
+    if (last != NULL) {
+      last->next = buf;
+    }
     StrategyControl->lastUnpinned = buf;
     printf("got here 6\n");
   }

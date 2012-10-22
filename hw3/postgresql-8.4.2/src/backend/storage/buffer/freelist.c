@@ -59,7 +59,8 @@ typedef struct
 	 */
   volatile BufferDesc *lastUnpinned;
   volatile BufferDesc *firstUnpinned;
-  //int *unpinnedBefore;
+  volatile BufferDesc *a1Head;
+  volatile BufferDesc *a1Tail;
 
 } BufferStrategyControl;
 
@@ -303,44 +304,26 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
 	      }
 	    }
 
-	  /*
-
-
-	      buf = StrategyControl->lastUnpinned;
-	      
-	      while (buf->refcount != 0) {    
-		buf->next = NULL;
-		newBuf = buf->previous;
-		buf->previous = NULL;
-		buf = newBuf;
-	      }
-	      //so now buf = the buffer we've selected for replacement
-	      StrategyControl->lastUnpinned = buf->previous; //update lastUnpinned
-	      StrategyControl->lastUnpinned->next = NULL; //set lastUnpinned's prev to null
-	      buf->next = NULL; //disconnect the chosen buf from linked list
-	      buf->previous = NULL; //by setting next, prev to null
-	      //StrategyControl->unpinnedBefore[buf->buf_id] = 0;
-	      resultIndex = buf->buf_id; //return chosen buf 
-	    //  elog(ERROR, "MRU unimplemented");
-	    }*/
 	  else if (BufferReplacementPolicy == POLICY_2Q)
 	    {
-	    elog(ERROR, "2Q unimplemented");
-	  }
-	else
-	  {
-	    elog(ERROR, "invalid buffer pool replacement policy %d", BufferReplacementPolicy);
-	  }
-	
-    /*
-     * CS186 Grading LOG - DON'T TOUCH
-     * Don't output logs starting with "GRADING" by yourself; they are for grading purposes only.
-     */
-    elog(LOG, "GRADING: EVICT %2d", resultIndex);  
-  }
+	      
 
+	      elog(ERROR, "2Q unimplemented");
+	    }
+	  else
+	    {
+	      elog(ERROR, "invalid buffer pool replacement policy %d", BufferReplacementPolicy);
+	    }
+	  
+	  /*
+	   * CS186 Grading LOG - DON'T TOUCH
+	   * Don't output logs starting with "GRADING" by yourself; they are for grading purposes only.
+	   */
+	  elog(LOG, "GRADING: EVICT %2d", resultIndex);  
+	}
+	
 	if (resultIndex == -1)
-		elog(ERROR, "reached end of StrategyGetBuffer() without selecting a buffer");
+	  elog(ERROR, "reached end of StrategyGetBuffer() without selecting a buffer");
 	
 	
 	return &BufferDescriptors[resultIndex];
@@ -357,6 +340,7 @@ void BufferUnpinned(int bufIndex)
   volatile BufferDesc *last= StrategyControl->lastUnpinned;
   volatile BufferDesc *previous = buf->previous;
   volatile BufferDesc *next = buf->next; 
+
   if (!LWLockConditionalAcquire(BufFreelistLock, LW_EXCLUSIVE))
     return;
    /*
@@ -366,9 +350,22 @@ void BufferUnpinned(int bufIndex)
    * StrategyControl global variable from inside this function.
    * This function was added by the GSIs.
    */
-  
-  /*the next series of if statements determines if the buf that was just unpinned is "already in the list", aka has been unpinned before */
+  if (BufferReplacementPolicy = "2Q") {
+    /*check if it's on A1 queue*/
+    BufferDesc *a1buf = StrategyControl->a1Head;
+    while (a1buf != NULL) {
+      if (a1buf == buf) {
+	//remove from a1 queue
+	//add to lru queue	
+      } else {
+	a1buf = a1buf->next;
+      }
+    }//if exits while loop, then buf is not on a1. add it to a1 queue
+  } else {
 
+  }
+
+  
   if (next != NULL) {
     if (previous != NULL) { //next and prev != null, buf is already in middle of list
       previous->next = next;
@@ -386,7 +383,7 @@ void BufferUnpinned(int bufIndex)
       StrategyControl->lastUnpinned = buf;
     }
   } else if (previous == NULL) { //next == NULL, prev == null, buf is new to list
-
+    
     if (first == NULL) { // if first time, then set firstUnpinned to this buffer
       StrategyControl->firstUnpinned = buf;
     }
@@ -397,9 +394,11 @@ void BufferUnpinned(int bufIndex)
     }
     StrategyControl->lastUnpinned = buf;
   }
+
+  
   LWLockRelease(BufFreelistLock);
 }
- 
+
 
 
 /*
@@ -533,6 +532,8 @@ StrategyInitialize(bool init)
 		/* CS186 TODO: Initialize any data you added to StrategyControlData here */
     StrategyControl->lastUnpinned = NULL;
     StrategyControl->firstUnpinned = NULL;
+    StrategyControl->a1Head = NULL;
+    StrategyControl->a1Tail = NULL;
  
     //StrategyControl->unpinnedBefore = ShmemInitStruct("unpinnedBefore", NBuffers * sizeof(int), &found);
 	}

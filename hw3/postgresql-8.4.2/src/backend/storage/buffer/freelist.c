@@ -254,7 +254,6 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
 	   */
 	  else if (BufferReplacementPolicy == POLICY_LRU)
 	    {      
-	      printf("beg of lru policy\n");
 	      buf = StrategyControl->firstUnpinned;
 
 	      while (buf != NULL) {
@@ -282,6 +281,32 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
 	  else if (BufferReplacementPolicy == POLICY_MRU)
 	    {
 	      buf = StrategyControl->lastUnpinned;
+	      while (buf != NULL) {
+		LockBufHdr(buf);
+		if (buf->refcount == 0) {
+		  resultIndex = buf->buf_id;
+		  break;
+		} else {
+		  UnlockBufHdr(buf);
+		  buf = buf->previous;
+		}
+	      }
+	      /*
+	       * We've scanned all the buffers without making any state changes,
+	       * so all the buffers are pinned (or were when we looked at them).
+	       * We could hope that someone will free one eventually, but it's
+	       * probably better to fail than to risk getting stuck in an
+	       * infinite loop.
+	       */
+	      if (buf == NULL) {
+		elog(ERROR, "no unpinned buffers available");
+	      }
+	    }
+
+	  /*
+
+
+	      buf = StrategyControl->lastUnpinned;
 	      
 	      while (buf->refcount != 0) {    
 		buf->next = NULL;
@@ -297,7 +322,7 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
 	      //StrategyControl->unpinnedBefore[buf->buf_id] = 0;
 	      resultIndex = buf->buf_id; //return chosen buf 
 	    //  elog(ERROR, "MRU unimplemented");
-	    }
+	    }*/
 	  else if (BufferReplacementPolicy == POLICY_2Q)
 	    {
 	    elog(ERROR, "2Q unimplemented");

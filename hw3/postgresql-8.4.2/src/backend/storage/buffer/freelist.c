@@ -254,42 +254,30 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
 	   */
 	  else if (BufferReplacementPolicy == POLICY_LRU)
 	    {      
+	      printf("beg of lru policy\n");
 	      buf = StrategyControl->firstUnpinned;
-	      //  LockBufHdr(buf);
-	      while (buf->refcount != 0) {
-		printf("the buffer we want to evict is pinned, refcount !=0\n");
-		buf->previous = NULL;
-		if (buf->next == NULL) {
-		  printf("all buffers in list are pinned\n");
-		  /*
-		   * We've scanned all the buffers without making any state changes,
-		   * so all the buffers are pinned (or were when we looked at them).
-		   * We could hope that someone will free one eventually, but it's
-		   * probably better to fail than to risk getting stuck in an
-		   * infinite loop.
-		   */
-		  //	UnlockBufHdr(buf);
-		  elog(ERROR, "no unpinned buffers available");
+
+	      while (buf != NULL) {
+		LockBufHdr(buf);
+		if (buf->refcount == 0) {
+		  resultIndex = buf->buf_id;
 		  break;
 		} else {
-		  newBuf = buf->next;
-		  buf->next = NULL;
-		  //	UnlockBufHdr(buf);
-		  buf = newBuf;
-		  //	LockBufHdr(buf);
+		  UnlockBufHdr(buf);
+		  buf = buf->next;
 		}
 	      }
-	      //so now buf = the buffer we've selected for replacement
-	      StrategyControl->firstUnpinned = buf->next; //update first unpinned
-	      if (StrategyControl->firstUnpinned != NULL) {
-		StrategyControl->firstUnpinned->previous = NULL; //set firstUnpinned's prev to null
-	      } else {
-		StrategyControl->lastUnpinned = NULL; //if firstUnpinned = null, there's nothing left in list. lastunpinned should also be null
+	      /*
+	       * We've scanned all the buffers without making any state changes,
+	       * so all the buffers are pinned (or were when we looked at them).
+	       * We could hope that someone will free one eventually, but it's
+	       * probably better to fail than to risk getting stuck in an
+	       * infinite loop.
+	       */
+	      if (buf == NULL) {
+		elog(ERROR, "no unpinned buffers available");
 	      }
-	      buf->next = NULL; //disconnect the chosen buf from linked list
-	      buf->previous = NULL; //by setting next, prev to null
-	      resultIndex = buf->buf_id; //return chosen buf
-	    } 
+	    }
 	  
 	  else if (BufferReplacementPolicy == POLICY_MRU)
 	    {
@@ -337,13 +325,13 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
  * CS186: Called when the specified buffer is unpinned and becomes
  * available for replacement. 
  */
-void
-BufferUnpinned(int bufIndex)
+void BufferUnpinned(int bufIndex)
 {
   volatile BufferDesc *buf = &BufferDescriptors[bufIndex];
-  volatile BufferDesc *first;
-  volatile BufferDesc *last;
-  
+  volatile BufferDesc *first = StrategyControl->firstUnpinned;
+  volatile BufferDesc *last= StrategyControl->lastUnpinned;
+  volatile BufferDesc *previous = buf->previous;
+  volatile BufferDesc *next = buf->next; 
   if (!LWLockConditionalAcquire(BufFreelistLock, LW_EXCLUSIVE))
     return;
    /*
@@ -352,28 +340,32 @@ BufferUnpinned(int bufIndex)
    * using your buffer replacement policy. You can access the 
    * StrategyControl global variable from inside this function.
    * This function was added by the GSIs.
-	 */
-
-
-  // if already in unpinned list, set neighbors to point to each other
-  volatile BufferDesc *previous = buf->previous;
-  volatile BufferDesc *next = buf->next;
-
+   */
+  
   /*the next series of if statements determines if the buf that was just unpinned is "already in the list", aka has been unpinned before */
+
   if (next != NULL) {
     if (previous != NULL) { //next and prev != null, buf is already in middle of list
       previous->next = next;
       next->previous = previous;
+      last->next = buf;
+      buf->previous = last;
+      buf->next = NULL;
+      StrategyControl->lastUnpinned = buf;
     } else { //next != null, prev == null, buf is at beginning of list
       next->previous = NULL;
-     }
+      StrategyControl->firstUnpinned = next;
+      last->next = buf;
+      buf->previous = last;
+      buf->next = NULL;
+      StrategyControl->lastUnpinned = buf;
+    }
   } else if (previous == NULL) { //next == NULL, prev == null, buf is new to list
-    first = StrategyControl->firstUnpinned;
-    last = StrategyControl->lastUnpinned;
+
     if (first == NULL) { // if first time, then set firstUnpinned to this buffer
       StrategyControl->firstUnpinned = buf;
     }
-    buf->previous = StrategyControl->lastUnpinned;
+    buf->previous = last;
     buf->next = NULL;
     if (last != NULL) {
       last->next = buf;
@@ -382,7 +374,7 @@ BufferUnpinned(int bufIndex)
   }
   LWLockRelease(BufFreelistLock);
 }
-
+ 
 
 
 /*
@@ -398,13 +390,13 @@ StrategyFreeBuffer(volatile BufferDesc *buf)
 	 * is already in it; don't screw up the list if so.
 	 */
 	if (buf->freeNext == FREENEXT_NOT_IN_LIST)
-	{
-		buf->freeNext = StrategyControl->firstFreeBuffer;
-		if (buf->freeNext < 0)
-			StrategyControl->lastFreeBuffer = buf->buf_id;
-		StrategyControl->firstFreeBuffer = buf->buf_id;
-	}
-
+	  {
+	    buf->freeNext = StrategyControl->firstFreeBuffer;
+	    if (buf->freeNext < 0)
+	      StrategyControl->lastFreeBuffer = buf->buf_id;
+	    StrategyControl->firstFreeBuffer = buf->buf_id;
+	  }
+	
 	LWLockRelease(BufFreelistLock);
 }
 

@@ -254,7 +254,6 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
 	   */
 	  else if (BufferReplacementPolicy == POLICY_LRU)
 	    {      
-	      printf("got here 3\n");
 	      buf = StrategyControl->firstUnpinned;
 	      //  LockBufHdr(buf);
 	      while (buf->refcount != 0) {
@@ -275,14 +274,11 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
 		} else {
 		  newBuf = buf->next;
 		  buf->next = NULL;
-		  //StrategyControl->unpinnedBefore[buf->buf_id] = 0;
 		  //	UnlockBufHdr(buf);
 		  buf = newBuf;
-		  printf("going to replace %d\n", buf->buf_id);
 		  //	LockBufHdr(buf);
 		}
 	      }
-	      printf("selected buf for replacement\n");
 	      //so now buf = the buffer we've selected for replacement
 	      StrategyControl->firstUnpinned = buf->next; //update first unpinned
 	      if (StrategyControl->firstUnpinned != NULL) {
@@ -290,10 +286,8 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
 	      } else {
 		StrategyControl->lastUnpinned = NULL; //if firstUnpinned = null, there's nothing left in list. lastunpinned should also be null
 	      }
-	      printf("passed the statement\n");
 	      buf->next = NULL; //disconnect the chosen buf from linked list
 	      buf->previous = NULL; //by setting next, prev to null
-	      //StrategyControl->unpinnedBefore[buf->buf_id] = 0;
 	      resultIndex = buf->buf_id; //return chosen buf
 	    } 
 	  
@@ -305,7 +299,6 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
 		buf->next = NULL;
 		newBuf = buf->previous;
 		buf->previous = NULL;
-		//StrategyControl->unpinnedBefore[buf->buf_id] = 0;
 		buf = newBuf;
 	      }
 	      //so now buf = the buffer we've selected for replacement
@@ -347,33 +340,20 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
 void
 BufferUnpinned(int bufIndex)
 {
-  printf("beginning bufferUnpinned \n");
-	volatile BufferDesc *buf = &BufferDescriptors[bufIndex];
-	volatile BufferDesc *first;
-	volatile BufferDesc *last;
-
-	if (!LWLockConditionalAcquire(BufFreelistLock, LW_EXCLUSIVE))
-		return;
-  printf("got here asd\n");
-	/*
-	 * CS186 TODO: When this function is called, the specified buffer has
-	 * just been unpinned. That means you can start to manage this buffer 
+  volatile BufferDesc *buf = &BufferDescriptors[bufIndex];
+  volatile BufferDesc *first;
+  volatile BufferDesc *last;
+  
+  if (!LWLockConditionalAcquire(BufFreelistLock, LW_EXCLUSIVE))
+    return;
+   /*
+   * CS186 TODO: When this function is called, the specified buffer has
+   * just been unpinned. That means you can start to manage this buffer 
    * using your buffer replacement policy. You can access the 
    * StrategyControl global variable from inside this function.
    * This function was added by the GSIs.
 	 */
 
-  
-  /*
-  int last = StrategyControl->lastUnpinned;
-  if (last = -1) {
-    StrategyControl->firstUnpinned = bufIndex;
-  } 
-  buf->previous = last;
-  buf->next = -1;
-  BufferDescriptors[lastUnpinned]->next = bufIndex;
-  StrategyControl->lastUnpinned = bufIndex;
-  */
 
   // if already in unpinned list, set neighbors to point to each other
   volatile BufferDesc *previous = buf->previous;
@@ -382,42 +362,23 @@ BufferUnpinned(int bufIndex)
   /*the next series of if statements determines if the buf that was just unpinned is "already in the list", aka has been unpinned before */
   if (next != NULL) {
     if (previous != NULL) { //next and prev != null, buf is already in middle of list
-      printf("adding buff which is already in middle of list\n");
       previous->next = next;
       next->previous = previous;
     } else { //next != null, prev == null, buf is at beginning of list
       next->previous = NULL;
-      printf("adding buff which is alrady in list, at beginning\n");
-    }
+     }
   } else if (previous == NULL) { //next == NULL, prev == null, buf is new to list
-    printf("got here 4\n");    
-      
-    /* else if (!(buf->next == NULL && buf->previous == NULL)) { //in middle of list
-    printf("got here blah\n");
-    //    volatile BufferDesc *previous = buf->previous;
-    printf("got here hopefully\n");
-    //  volatile BufferDesc *next = buf->next;
-    previous->next = next;
-    next->previous = previous;
-    printf("got here 5\n");*/
-   //else {
-   // StrategyControl->unpinnedBefore[bufIndex] = 1;
-  //}
-
     first = StrategyControl->firstUnpinned;
     last = StrategyControl->lastUnpinned;
     if (first == NULL) { // if first time, then set firstUnpinned to this buffer
       StrategyControl->firstUnpinned = buf;
-    } //else {
-    // last->next = buf; //if not first time, set last-> next to current buf
-    // }
+    }
     buf->previous = StrategyControl->lastUnpinned;
     buf->next = NULL;
     if (last != NULL) {
       last->next = buf;
     }
     StrategyControl->lastUnpinned = buf;
-    printf("got here 6\n");
   }
   LWLockRelease(BufFreelistLock);
 }
@@ -555,8 +516,7 @@ StrategyInitialize(bool init)
 		/* CS186 TODO: Initialize any data you added to StrategyControlData here */
     StrategyControl->lastUnpinned = NULL;
     StrategyControl->firstUnpinned = NULL;
-    printf("got here 1 \n");
-
+ 
     //StrategyControl->unpinnedBefore = ShmemInitStruct("unpinnedBefore", NBuffers * sizeof(int), &found);
 	}
 	else

@@ -356,16 +356,14 @@ void BufferUnpinned(int bufIndex)
     while (a1buf != NULL) {
       if (a1buf == buf) {
 	//remove from a1 queue
-	//add to lru queue	
+	//add to am queue
+	//break
       } else {
 	a1buf = a1buf->next;
       }
-    }//if exits while loop, then buf is not on a1. add it to a1 queue
-  } else {
-
+    }//if exits while loop, then buf is not on a1
   }
-
-  
+  /*checks if it's on am queue*/
   if (next != NULL) {
     if (previous != NULL) { //next and prev != null, buf is already in middle of list
       previous->next = next;
@@ -383,20 +381,22 @@ void BufferUnpinned(int bufIndex)
       StrategyControl->lastUnpinned = buf;
     }
   } else if (previous == NULL) { //next == NULL, prev == null, buf is new to list
+    if (BufferReplacementStrategy = "2Q") { //if it's gotten to here w/ 2q, its not on AM or A1
+      //add it to a1 (not am)
+    } else { //add it to am
+      if (first == NULL) { // if first time, then set firstUnpinned to this buffer
+	StrategyControl->firstUnpinned = buf;
+      }
+      buf->previous = last;
+      buf->next = NULL;
+      if (last != NULL) {
+	last->next = buf;
+      }
+      StrategyControl->lastUnpinned = buf;
+    }
     
-    if (first == NULL) { // if first time, then set firstUnpinned to this buffer
-      StrategyControl->firstUnpinned = buf;
-    }
-    buf->previous = last;
-    buf->next = NULL;
-    if (last != NULL) {
-      last->next = buf;
-    }
-    StrategyControl->lastUnpinned = buf;
+    LWLockRelease(BufFreelistLock);
   }
-
-  
-  LWLockRelease(BufFreelistLock);
 }
 
 

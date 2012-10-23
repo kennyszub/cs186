@@ -350,51 +350,139 @@ void BufferUnpinned(int bufIndex)
    * StrategyControl global variable from inside this function.
    * This function was added by the GSIs.
    */
+   
+   /*
   if (BufferReplacementPolicy = "2Q") {
-    /*check if it's on A1 queue*/
+    //check if it's on A1 queue
     BufferDesc *a1buf = StrategyControl->a1Head;
     while (a1buf != NULL) {
       if (a1buf == buf) {
-	//remove from a1 queue
-	//add to am queue
-	//break
+	    //remove from a1 queue
+	    //add to am queue
+	    //break
+	      if (next != NULL) {
+          if (previous != NULL) { //next and prev != null, buf is already in middle of list
+            //connect a1 nodes
+            previous->next = next;
+            next->previous = previous;
+            //add to am
+            last->next = buf;
+            buf->previous = last;
+            buf->next = NULL;
+            StrategyControl->lastUnpinned = buf;
+          } else { //next != null, prev == null, buf is at beginning of list
+            next->previous = NULL;
+            //set a1 head
+            StrategyControl->a1Head = next;
+            //StrategyControl->firstUnpinned = next;
+            last->next = buf;
+            buf->previous = last;
+            buf->next = NULL;
+            StrategyControl->lastUnpinned = buf;
+          }
+	      } else if (previous == NULL) { //next == NULL, prev == null, buf is new to list
+          //need to check if there's anything in a1 to see if we need to set firstUnpinned
+            if (first == NULL) { // if first time, then set firstUnpinned to this buffer
+	            StrategyControl->firstUnpinned = buf;
+            }
+            buf->previous = last;
+            buf->next = NULL;
+            if (last != NULL) {
+	            last->next = buf;
+            }
+            StrategyControl->lastUnpinned = buf;
+        }
+          
+         LWLockRelease(BufFreelistLock);
+         return
       } else {
-	a1buf = a1buf->next;
+	      a1buf = a1buf->next;
       }
     }//if exits while loop, then buf is not on a1
-  }
-  /*checks if it's on am queue*/
-  if (next != NULL) {
-    if (previous != NULL) { //next and prev != null, buf is already in middle of list
-      previous->next = next;
-      next->previous = previous;
-      last->next = buf;
-      buf->previous = last;
-      buf->next = NULL;
-      StrategyControl->lastUnpinned = buf;
-    } else { //next != null, prev == null, buf is at beginning of list
-      next->previous = NULL;
-      StrategyControl->firstUnpinned = next;
-      last->next = buf;
-      buf->previous = last;
-      buf->next = NULL;
-      StrategyControl->lastUnpinned = buf;
+  }*/
+  
+  if (BufferReplacementPolicy == "2Q") {
+    //2Q stuff
+    //if buf is on the AM queue then put buf on the front of the Am queue
+    BufferDesc *head = first;
+    while (head != NULL) {
+      if (head == buf) {
+        //buf in AM queue, putting at the tail of AM queue
+        //if it's in the queue, assume firstUnpinned and lastUnpinned have been set
+        previous = head->previous;
+        next = head->next;
+        
+        if (next != NULL) {
+          if (previous != NULL) { // buf in middle of AM queue
+            previous->next = next;
+            next->previous = previous;
+            last->next = buf;
+            buf->previous = last;
+            buf->next = NULL;
+            StrategyControl->lastUnpinned = buf;
+          } else { // buf at beginning
+            next->previous = NULL;
+            StrategyControl->firstUnpinned = next;
+            last->next = buf;
+            buf->previous = last;
+            buf->next = NULL;
+            StrategyControl->lastUnpinned = buf;
+          }
+        } else if (previous == NULL) { // next == NULL, prev == NULL, buf is only item
+          if (first == NULL) {
+            StrategyControl->firstUnpinned = buf;
+          }
+          buf->previous = last;
+          buf->next = NULL;
+          if (last != NULL) {
+            last->next = buf;
+          }
+          StrategyControl->lastUnpinned = buf;
+        } 
+        LWLockRelease(BufFreelistLock);
+        }
+      } else {
+        head = buf->next;
+      }
     }
-  } else if (previous == NULL) { //next == NULL, prev == null, buf is new to list
-    if (BufferReplacementStrategy = "2Q") { //if it's gotten to here w/ 2q, its not on AM or A1
-      //add it to a1 (not am)
-    } else { //add it to am
+    
+    //else if buf is on the A1 queue then
+        //remove buf from the A1 queue
+        //put buf on the front of the Am queue
+   
+    //else
+        //put buf on the front of the A1 queue
+  
+  
+  
+  } else {
+    if (next != NULL) {
+      if (previous != NULL) { //next and prev != null, buf is already in middle of list
+        previous->next = next;
+        next->previous = previous;
+        last->next = buf;
+        buf->previous = last;
+        buf->next = NULL;
+        StrategyControl->lastUnpinned = buf;
+      } else { //next != null, prev == null, buf is at beginning of list
+        next->previous = NULL;
+        StrategyControl->firstUnpinned = next;
+        last->next = buf;
+        buf->previous = last;
+        buf->next = NULL;
+        StrategyControl->lastUnpinned = buf;
+      }
+    } else if (previous == NULL) { //next == NULL, prev == null, buf is new to list
       if (first == NULL) { // if first time, then set firstUnpinned to this buffer
-	StrategyControl->firstUnpinned = buf;
+        StrategyControl->firstUnpinned = buf;
       }
       buf->previous = last;
       buf->next = NULL;
       if (last != NULL) {
-	last->next = buf;
+        last->next = buf;
       }
       StrategyControl->lastUnpinned = buf;
     }
-    
     LWLockRelease(BufFreelistLock);
   }
 }

@@ -59,7 +59,8 @@ typedef struct
 	 */
   volatile BufferDesc *lastUnpinned;
   volatile BufferDesc *firstUnpinned;
-  //int *unpinnedBefore;
+  volatile BufferDesc *a1Head;
+  volatile BufferDesc *a1Tail;
 
 } BufferStrategyControl;
 
@@ -131,7 +132,7 @@ volatile BufferDesc *
 StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
 {
 	volatile BufferDesc *buf;
-  volatile BufferDesc *newBuf;  
+	volatile BufferDesc *newBuf;  
   
 	volatile int bufIndex = -1;
 	volatile int resultIndex = -1;
@@ -180,136 +181,149 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
 		  buf->previous = NULL;
 		  
 		  
-			resultIndex = bufIndex;
-			break;
+		  resultIndex = bufIndex;
+		  break;
 		}
 		UnlockBufHdr(buf);
 	}
-
+	
 	/*
 	 * Nothing on the freelist, so use the buffer replacement policy
 	 * to select a buffer to evict.
 	 */
 	if (resultIndex == -1)
 	{
-		if (BufferReplacementPolicy == POLICY_CLOCK)
+	  if (BufferReplacementPolicy == POLICY_CLOCK)
+	    {
+	      /* Run the "clock sweep" algorithm */
+	      trycounter = NBuffers;
+	      for (;;)
 		{
-			/* Run the "clock sweep" algorithm */
-			trycounter = NBuffers;
-			for (;;)
-			{
-				bufIndex = StrategyControl->nextVictimBuffer;
-				buf = &BufferDescriptors[bufIndex];
-
-				/*
-				 * If the clock sweep hand has reached the end of the
-				 * buffer pool, start back at the beginning.
-				 */
-				if (++StrategyControl->nextVictimBuffer >= NBuffers)
-				{
-					StrategyControl->nextVictimBuffer = 0;
-					StrategyControl->completePasses++;
-				}
-
-				/*
-				 * If the buffer is pinned or has a nonzero usage_count, we cannot use
-				 * it; decrement the usage_count (unless pinned) and keep scanning.
-				 */
-				LockBufHdr(buf);
-				if (buf->refcount == 0)
-				{
-					if (buf->usage_count > 0)
-					{
-						buf->usage_count--;
-						trycounter = NBuffers;
-					}
-					else
-					{
-						/* Found a usable buffer */
-						resultIndex = bufIndex;
-						break;
-					}
-				}
-				else if (--trycounter == 0)
-				{
-					/*
-					 * We've scanned all the buffers without making any state changes,
-					 * so all the buffers are pinned (or were when we looked at them).
-					 * We could hope that someone will free one eventually, but it's
-					 * probably better to fail than to risk getting stuck in an
-					 * infinite loop.
-					 */
-					UnlockBufHdr(buf);
-					elog(ERROR, "no unpinned buffers available");
-				}
-				UnlockBufHdr(buf);
-			}
-		}
-		/*
-		 * CS186 TODO: Add code here to implement the LRU, MRU and 2Q buffer
-		 * replacement policies. Once you've selected a buffer to
-		 * evict, assign its index in the BufferDescriptors array to
-		 * "resultIndex". You can model your code on the CLOCK code
-		 * above.
-		 */
-		else if (BufferReplacementPolicy == POLICY_LRU)
-		  {      
-        printf("got here 3");
-		    buf = StrategyControl->firstUnpinned;
-		    while (buf->refcount != 0) {    
-		      buf->previous = NULL;
-		      newBuf = buf->next;
-		      buf->next = NULL;
-		      //StrategyControl->unpinnedBefore[buf->buf_id] = 0;
-		      buf = newBuf;
+		  bufIndex = StrategyControl->nextVictimBuffer;
+		  buf = &BufferDescriptors[bufIndex];
+		  
+		  /*
+		   * If the clock sweep hand has reached the end of the
+		   * buffer pool, start back at the beginning.
+		   */
+		  if (++StrategyControl->nextVictimBuffer >= NBuffers)
+		    {
+		      StrategyControl->nextVictimBuffer = 0;
+		      StrategyControl->completePasses++;
 		    }
-		    //so now buf = the buffer we've selected for replacement
-		    StrategyControl->firstUnpinned = buf->next; //update first unpinned
-		    StrategyControl->firstUnpinned->previous = NULL; //set firstUnpinned's prev to null
-		    buf->next = NULL; //disconnect the chosen buf from linked list
-		    buf->previous = NULL; //by setting next, prev to null
-		    //StrategyControl->unpinnedBefore[buf->buf_id] = 0;
-		    resultIndex = buf->buf_id; //return chosen buf
-		  } 
-	
-	else if (BufferReplacementPolicy == POLICY_MRU)
-	  {
-	    buf = StrategyControl->lastUnpinned;
 
-	    while (buf->refcount != 0) {    
-	      buf->next = NULL;
-	      newBuf = buf->previous;
-	      buf->previous = NULL;
-	      //StrategyControl->unpinnedBefore[buf->buf_id] = 0;
-	      buf = newBuf;
+		  /*
+		   * If the buffer is pinned or has a nonzero usage_count, we cannot use
+		   * it; decrement the usage_count (unless pinned) and keep scanning.
+		   */
+		  LockBufHdr(buf);
+		  if (buf->refcount == 0)
+		    {
+		      if (buf->usage_count > 0)
+			{
+			  buf->usage_count--;
+			  trycounter = NBuffers;
+			}
+		      else
+			{
+			  /* Found a usable buffer */
+			  resultIndex = bufIndex;
+			  break;
+			}
+		    }
+		  else if (--trycounter == 0)
+		    {
+		      /*
+		       * We've scanned all the buffers without making any state changes,
+		       * so all the buffers are pinned (or were when we looked at them).
+		       * We could hope that someone will free one eventually, but it's
+		       * probably better to fail than to risk getting stuck in an
+		       * infinite loop.
+		       */
+		      UnlockBufHdr(buf);
+		      elog(ERROR, "no unpinned buffers available");
+		    }
+		  UnlockBufHdr(buf);
+		}
 	    }
-	    //so now buf = the buffer we've selected for replacement
-	    StrategyControl->lastUnpinned = buf->previous; //update lastUnpinned
-	    StrategyControl->lastUnpinned->next = NULL; //set lastUnpinned's prev to null
-	    buf->next = NULL; //disconnect the chosen buf from linked list
-	    buf->previous = NULL; //by setting next, prev to null
-	    //StrategyControl->unpinnedBefore[buf->buf_id] = 0;
-	    resultIndex = buf->buf_id; //return chosen buf 
-	    //  elog(ERROR, "MRU unimplemented");
-	  }
-	else if (BufferReplacementPolicy == POLICY_2Q)
-	  {
-	    elog(ERROR, "2Q unimplemented");
-	  }
-	else
-	  {
-	    elog(ERROR, "invalid buffer pool replacement policy %d", BufferReplacementPolicy);
-	  }
-	
-    /*
-     * CS186 Grading LOG - DON'T TOUCH
-     * Don't output logs starting with "GRADING" by yourself; they are for grading purposes only.
-     */
-    elog(LOG, "GRADING: EVICT %2d", resultIndex);  
-  }
+	  /*
+	   * CS186 TODO: Add code here to implement the LRU, MRU and 2Q buffer
+	   * replacement policies. Once you've selected a buffer to
+	   * evict, assign its index in the BufferDescriptors array to
+	   * "resultIndex". You can model your code on the CLOCK code
+	   * above.
+	   */
+	  else if (BufferReplacementPolicy == POLICY_LRU)
+	    {      
+	      buf = StrategyControl->firstUnpinned;
 
+	      while (buf != NULL) {
+		LockBufHdr(buf);
+		if (buf->refcount == 0) {
+		  resultIndex = buf->buf_id;
+		  break;
+		} else {
+		  UnlockBufHdr(buf);
+		  buf = buf->next;
+		}
+	      }
+	      /*
+	       * We've scanned all the buffers without making any state changes,
+	       * so all the buffers are pinned (or were when we looked at them).
+	       * We could hope that someone will free one eventually, but it's
+	       * probably better to fail than to risk getting stuck in an
+	       * infinite loop.
+	       */
+	      if (buf == NULL) {
+		elog(ERROR, "no unpinned buffers available");
+	      }
+	    }
+	  
+	  else if (BufferReplacementPolicy == POLICY_MRU)
+	    {
+	      buf = StrategyControl->lastUnpinned;
+	      while (buf != NULL) {
+		LockBufHdr(buf);
+		if (buf->refcount == 0) {
+		  resultIndex = buf->buf_id;
+		  break;
+		} else {
+		  UnlockBufHdr(buf);
+		  buf = buf->previous;
+		}
+	      }
+	      /*
+	       * We've scanned all the buffers without making any state changes,
+	       * so all the buffers are pinned (or were when we looked at them).
+	       * We could hope that someone will free one eventually, but it's
+	       * probably better to fail than to risk getting stuck in an
+	       * infinite loop.
+	       */
+	      if (buf == NULL) {
+		elog(ERROR, "no unpinned buffers available");
+	      }
+	    }
+
+	  else if (BufferReplacementPolicy == POLICY_2Q)
+	    {
+	      
+
+	      elog(ERROR, "2Q unimplemented");
+	    }
+	  else
+	    {
+	      elog(ERROR, "invalid buffer pool replacement policy %d", BufferReplacementPolicy);
+	    }
+	  
+	  /*
+	   * CS186 Grading LOG - DON'T TOUCH
+	   * Don't output logs starting with "GRADING" by yourself; they are for grading purposes only.
+	   */
+	  elog(LOG, "GRADING: EVICT %2d", resultIndex);  
+	}
+	
 	if (resultIndex == -1)
-		elog(ERROR, "reached end of StrategyGetBuffer() without selecting a buffer");
+	  elog(ERROR, "reached end of StrategyGetBuffer() without selecting a buffer");
 	
 	
 	return &BufferDescriptors[resultIndex];
@@ -319,62 +333,150 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
  * CS186: Called when the specified buffer is unpinned and becomes
  * available for replacement. 
  */
-void
-BufferUnpinned(int bufIndex)
+void BufferUnpinned(int bufIndex)
 {
-  printf("got here 2 \n");
-	volatile BufferDesc *buf = &BufferDescriptors[bufIndex];
-	volatile BufferDesc *last;
+  volatile BufferDesc *buf = &BufferDescriptors[bufIndex];
+  volatile BufferDesc *first = StrategyControl->firstUnpinned;
+  volatile BufferDesc *last= StrategyControl->lastUnpinned;
+  volatile BufferDesc *previous = buf->previous;
+  volatile BufferDesc *next = buf->next; 
 
-	if (!LWLockConditionalAcquire(BufFreelistLock, LW_EXCLUSIVE))
-		return;
-  printf("got here asd\n");
-	/*
-	 * CS186 TODO: When this function is called, the specified buffer has
-	 * just been unpinned. That means you can start to manage this buffer 
+  if (!LWLockConditionalAcquire(BufFreelistLock, LW_EXCLUSIVE))
+    return;
+   /*
+   * CS186 TODO: When this function is called, the specified buffer has
+   * just been unpinned. That means you can start to manage this buffer 
    * using your buffer replacement policy. You can access the 
    * StrategyControl global variable from inside this function.
    * This function was added by the GSIs.
-	 */
-
+   */
+   
+   /*
+  if (BufferReplacementPolicy = "2Q") {
+    //check if it's on A1 queue
+    BufferDesc *a1buf = StrategyControl->a1Head;
+    while (a1buf != NULL) {
+      if (a1buf == buf) {
+	    //remove from a1 queue
+	    //add to am queue
+	    //break
+	      if (next != NULL) {
+          if (previous != NULL) { //next and prev != null, buf is already in middle of list
+            //connect a1 nodes
+            previous->next = next;
+            next->previous = previous;
+            //add to am
+            last->next = buf;
+            buf->previous = last;
+            buf->next = NULL;
+            StrategyControl->lastUnpinned = buf;
+          } else { //next != null, prev == null, buf is at beginning of list
+            next->previous = NULL;
+            //set a1 head
+            StrategyControl->a1Head = next;
+            //StrategyControl->firstUnpinned = next;
+            last->next = buf;
+            buf->previous = last;
+            buf->next = NULL;
+            StrategyControl->lastUnpinned = buf;
+          }
+	      } else if (previous == NULL) { //next == NULL, prev == null, buf is new to list
+          //need to check if there's anything in a1 to see if we need to set firstUnpinned
+            if (first == NULL) { // if first time, then set firstUnpinned to this buffer
+	            StrategyControl->firstUnpinned = buf;
+            }
+            buf->previous = last;
+            buf->next = NULL;
+            if (last != NULL) {
+	            last->next = buf;
+            }
+            StrategyControl->lastUnpinned = buf;
+        }
+          
+         LWLockRelease(BufFreelistLock);
+         return
+      } else {
+	      a1buf = a1buf->next;
+      }
+    }//if exits while loop, then buf is not on a1
+  }*/
   
-  /*
-  int last = StrategyControl->lastUnpinned;
-  if (last = -1) {
-    StrategyControl->firstUnpinned = bufIndex;
-  } 
-  buf->previous = last;
-  buf->next = -1;
-  BufferDescriptors[lastUnpinned]->next = bufIndex;
-  StrategyControl->lastUnpinned = bufIndex;
-  */
-
-  // if already in unpinned list, set neighbors to point to each other
-  printf("got here 4\n");
-  if (!(buf->next == NULL && buf->previous == NULL)) {
-    printf("got here blah\n");
-    volatile BufferDesc *previous = buf->previous;
-    printf("got here hopefully\n");
-    volatile BufferDesc *next = buf->next;
-    previous->next = next;
-    next->previous = previous;
-    printf("got here 5\n");
-  } //else {
-   // StrategyControl->unpinnedBefore[bufIndex] = 1;
-  //}
-
-  last = StrategyControl->lastUnpinned;
-  if (last == NULL) { // if first time, then set firstUnpinned to this buffer
-    StrategyControl->firstUnpinned = buf;
+  if (BufferReplacementPolicy == "2Q") {
+    //2Q stuff
+    //if buf is on the AM queue then put buf on the front of the Am queue
+    BufferDesc *head = first;
+    while (head != NULL) {
+      if (head == buf) {
+        //buf in AM queue, putting at the tail of AM queue
+        //if it's in the queue, assume firstUnpinned and lastUnpinned have been set
+        previous = head->previous;
+        next = head->next;
+        
+        if (next != NULL) {
+          if (previous != NULL) { // buf in middle of AM queue
+            previous->next = next;
+            next->previous = previous;
+            last->next = buf;
+            buf->previous = last;
+            buf->next = NULL;
+            StrategyControl->lastUnpinned = buf;
+          } else { // buf at beginning
+            next->previous = NULL;
+            StrategyControl->firstUnpinned = next;
+            last->next = buf;
+            buf->previous = last;
+            buf->next = NULL;
+            StrategyControl->lastUnpinned = buf;
+          }
+        } else if (previous == NULL) { // buf 
+          
+        }
+      } else {
+        head = buf->next;
+      }
+    }
+    
+    //else if buf is on the A1 queue then
+        //remove buf from the A1 queue
+        //put buf on the front of the Am queue
+   
+    //else
+        //put buf on the front of the A1 queue
+  
+  
+  
+  } else {
+    if (next != NULL) {
+      if (previous != NULL) { //next and prev != null, buf is already in middle of list
+        previous->next = next;
+        next->previous = previous;
+        last->next = buf;
+        buf->previous = last;
+        buf->next = NULL;
+        StrategyControl->lastUnpinned = buf;
+      } else { //next != null, prev == null, buf is at beginning of list
+        next->previous = NULL;
+        StrategyControl->firstUnpinned = next;
+        last->next = buf;
+        buf->previous = last;
+        buf->next = NULL;
+        StrategyControl->lastUnpinned = buf;
+      }
+    } else if (previous == NULL) { //next == NULL, prev == null, buf is new to list
+      if (first == NULL) { // if first time, then set firstUnpinned to this buffer
+        StrategyControl->firstUnpinned = buf;
+      }
+      buf->previous = last;
+      buf->next = NULL;
+      if (last != NULL) {
+        last->next = buf;
+      }
+      StrategyControl->lastUnpinned = buf;
+    }
+    LWLockRelease(BufFreelistLock);
   }
-  buf->previous = last;
-  buf->next = NULL;
-  last->next= buf;
-  StrategyControl->lastUnpinned = buf;
-  printf("got here 6");
-
-	LWLockRelease(BufFreelistLock);
 }
+
 
 
 /*
@@ -390,13 +492,13 @@ StrategyFreeBuffer(volatile BufferDesc *buf)
 	 * is already in it; don't screw up the list if so.
 	 */
 	if (buf->freeNext == FREENEXT_NOT_IN_LIST)
-	{
-		buf->freeNext = StrategyControl->firstFreeBuffer;
-		if (buf->freeNext < 0)
-			StrategyControl->lastFreeBuffer = buf->buf_id;
-		StrategyControl->firstFreeBuffer = buf->buf_id;
-	}
-
+	  {
+	    buf->freeNext = StrategyControl->firstFreeBuffer;
+	    if (buf->freeNext < 0)
+	      StrategyControl->lastFreeBuffer = buf->buf_id;
+	    StrategyControl->firstFreeBuffer = buf->buf_id;
+	  }
+	
 	LWLockRelease(BufFreelistLock);
 }
 
@@ -508,8 +610,9 @@ StrategyInitialize(bool init)
 		/* CS186 TODO: Initialize any data you added to StrategyControlData here */
     StrategyControl->lastUnpinned = NULL;
     StrategyControl->firstUnpinned = NULL;
-    printf("got here 1 \n");
-
+    StrategyControl->a1Head = NULL;
+    StrategyControl->a1Tail = NULL;
+ 
     //StrategyControl->unpinnedBefore = ShmemInitStruct("unpinnedBefore", NBuffers * sizeof(int), &found);
 	}
 	else

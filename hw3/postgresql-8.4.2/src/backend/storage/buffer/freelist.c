@@ -500,16 +500,16 @@ void BufferUnpinned(int bufIndex)
             buf->next = NULL;
             StrategyControl->lastUnpinned = buf;
           }
-        } else if (previous == NULL) { // next == NULL, prev == NULL, buf is only item
-          if (first == NULL) {
-            StrategyControl->firstUnpinned = buf;
-          }
-          buf->previous = last;
-          buf->next = NULL;
-          if (last != NULL) {
-            last->next = buf;
-          }
-          StrategyControl->lastUnpinned = buf;
+        //} else if (previous == NULL) { // next == NULL, prev == NULL, buf is only item
+          //if (first == NULL) {
+            //StrategyControl->firstUnpinned = buf;
+         // }
+          //buf->previous = last;
+          //buf->next = NULL;
+          //if (last != NULL) {
+           // last->next = buf;
+          //}
+          //StrategyControl->lastUnpinned = buf;
         } 
         return;
       } else {
@@ -517,10 +517,10 @@ void BufferUnpinned(int bufIndex)
       }
     }
 
+    //else if buf is on the A1 queue then
     head = StrategyControl->a1Head; 
     while (head != NULL) {
       if (head == buf) {
-        //else if buf is on the A1 queue then
         //remove buf from the A1 queue
         //put buf on the front of the Am queue
         if (next != NULL) {

@@ -1,0 +1,6 @@
+LOG:  using buffer replacement policy: 2q
+LOG:  database system was shut down at 2012-10-22 22:19:33 PDT
+LOG:  database system is ready to accept connections
+LOG:  received smart shutdown request
+LOG:  received fast shutdown request
+LOG:  aborting any active transactions

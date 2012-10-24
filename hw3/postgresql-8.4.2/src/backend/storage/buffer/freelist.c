@@ -266,6 +266,7 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
           UnlockBufHdr(buf);
           buf = buf->next;
         }
+
       }
       /*
        * We've scanned all the buffers without making any state changes,
@@ -275,8 +276,10 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
        * infinite loop.
        */
       if (buf == NULL) {
+	UnlockBufHdr(buf); //p added 10/24
         elog(ERROR, "no unpinned buffers available");
       }
+
     }
 
     else if (BufferReplacementPolicy == POLICY_MRU)
@@ -300,8 +303,10 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
        * infinite loop.
        */
       if (buf == NULL) {
+	UnlockBufHdr(buf); //p added 10/24
         elog(ERROR, "no unpinned buffers available");
       }
+  
     }
 
     else if (BufferReplacementPolicy == POLICY_2Q)
@@ -316,7 +321,7 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
       if (sizeA1 >= thres || StrategyControl->lastUnpinned == NULL) {
         buf = StrategyControl->a1Head;
         while (buf != NULL) {
-          LockBufHdr(buf);
+
           if (buf->refcount == 0) {
             resultIndex = buf->buf_id;
             next = buf->next;
@@ -342,18 +347,20 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
             break;
 
           } else {
-            UnlockBufHdr(buf);
+
             buf = buf->next;
           }
-        //    elog(ERROR, "2Q unimplemented");
+
         }
         if (buf == NULL) {
+
           elog(ERROR, "no unpinned buffers available");
         }
+
       } else { // delete from the head of AM
         buf = StrategyControl->firstUnpinned;
         while (buf != NULL) {
-          LockBufHdr(buf);
+	  //          LockBufHdr(buf);
           if (buf->refcount == 0) {
             resultIndex = buf->buf_id;
             next = buf->next;
@@ -378,11 +385,14 @@ StrategyGetBuffer(BufferAccessStrategy strategy, bool *lock_held)
             buf->previous = NULL;
             break;
           } else {
-            UnlockBufHdr(buf);
+	    //            UnlockBufHdr(buf);
             buf = buf->next;
           }
+	  //	  UnlockBufHdr(buf); //phoebe 10/24
+
         }
         if (buf == NULL) {
+	  //	  UnlockBufHdr(buf);
           elog(ERROR, "no unpinned buffers available");
         }
       }
@@ -426,55 +436,7 @@ void BufferUnpinned(int bufIndex)
    * This function was added by the GSIs.
    */
 
-  /*
-     if (BufferReplacementPolicy = "2Q") {
-  //check if it's on A1 queue
-  BufferDesc *a1buf = StrategyControl->a1Head;
-  while (a1buf != NULL) {
-  if (a1buf == buf) {
-  //remove from a1 queue
-  //add to am queue
-  //break
-  if (next != NULL) {
-  if (previous != NULL) { //next and prev != null, buf is already in middle of list
-  //connect a1 nodes
-  previous->next = next;
-  next->previous = previous;
-  //add to am
-  last->next = buf;
-  buf->previous = last;
-  buf->next = NULL;
-  StrategyControl->lastUnpinned = buf;
-  } else { //next != null, prev == null, buf is at beginning of list
-  next->previous = NULL;
-  //set a1 head
-  StrategyControl->a1Head = next;
-  //StrategyControl->firstUnpinned = next;
-  last->next = buf;
-  buf->previous = last;
-  buf->next = NULL;
-  StrategyControl->lastUnpinned = buf;
-  }
-  } else if (previous == NULL) { //next == NULL, prev == null, buf is new to list
-  //need to check if there's anything in a1 to see if we need to set firstUnpinned
-  if (first == NULL) { // if first time, then set firstUnpinned to this buffer
-  StrategyControl->firstUnpinned = buf;
-  }
-  buf->previous = last;
-  buf->next = NULL;
-  if (last != NULL) {
-  last->next = buf;
-  }
-  StrategyControl->lastUnpinned = buf;
-  }
-
-  LWLockRelease(BufFreelistLock);
-  return
-  } else {
-  a1buf = a1buf->next;
-  }
-  }//if exits while loop, then buf is not on a1
-  }*/
+ 
 
   if (BufferReplacementPolicy == POLICY_2Q) {
     //2Q stuff
@@ -500,17 +462,9 @@ void BufferUnpinned(int bufIndex)
             buf->next = NULL;
             StrategyControl->lastUnpinned = buf;
           }
-        //} else if (previous == NULL) { // next == NULL, prev == NULL, buf is only item
-          //if (first == NULL) {
-            //StrategyControl->firstUnpinned = buf;
-         // }
-          //buf->previous = last;
-          //buf->next = NULL;
-          //if (last != NULL) {
-           // last->next = buf;
-          //}
-          //StrategyControl->lastUnpinned = buf;
+
         } 
+	LWLockRelease(BufFreelistLock);
         return;
       } else {
         head = head->next;
@@ -575,6 +529,7 @@ void BufferUnpinned(int bufIndex)
           buf->next = NULL;
           StrategyControl->lastUnpinned = buf;
         }
+	LWLockRelease(BufFreelistLock);
         return;
       } else {
         head = head->next;

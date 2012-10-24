@@ -1,0 +1,176 @@
+LOG:  using buffer replacement policy: lru
+LOG:  database system was shut down at 2012-10-24 15:34:36 PDT
+LOG:  database system is ready to accept connections
+LOG:  GRADING: EVICT 22
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 19
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 25
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 26
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  EXECUTOR STATISTICS
+DETAIL:  ! system usage stats:
+	!	0.021126 elapsed 0.000000 user 0.008000 system sec
+	!	[0.016001 user 0.012000 sys total]
+	!	0/8 [0/192] filesystem blocks in/out
+	!	0/70 [0/897] page faults/reclaims, 0 [0] swaps
+	!	0 [0] signals rcvd, 0/0 [0/0] messages rcvd/sent
+	!	0/28 [2/37] voluntary/involuntary context switches
+	! buffer usage stats:
+	!	Shared blocks:         27 read,          0 written, buffer hit rate = 0.00%
+	!	Local  blocks:          0 read,          0 written, buffer hit rate = 0.00%
+	!	Direct blocks:          0 read,          0 written
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  EXECUTOR STATISTICS
+DETAIL:  ! system usage stats:
+	!	0.018294 elapsed 0.000000 user 0.012001 system sec
+	!	[0.016001 user 0.024001 sys total]
+	!	0/0 [0/192] filesystem blocks in/out
+	!	0/0 [0/902] page faults/reclaims, 0 [0] swaps
+	!	0 [0] signals rcvd, 0/0 [0/0] messages rcvd/sent
+	!	0/25 [3/66] voluntary/involuntary context switches
+	! buffer usage stats:
+	!	Shared blocks:          0 read,          0 written, buffer hit rate = 100.00%
+	!	Local  blocks:          0 read,          0 written, buffer hit rate = 0.00%
+	!	Direct blocks:          0 read,          0 written
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  EXECUTOR STATISTICS
+DETAIL:  ! system usage stats:
+	!	0.016687 elapsed 0.000000 user 0.008001 system sec
+	!	[0.016001 user 0.032002 sys total]
+	!	0/0 [0/200] filesystem blocks in/out
+	!	0/0 [0/902] page faults/reclaims, 0 [0] swaps
+	!	0 [0] signals rcvd, 0/0 [0/0] messages rcvd/sent
+	!	0/15 [4/84] voluntary/involuntary context switches
+	! buffer usage stats:
+	!	Shared blocks:          0 read,          0 written, buffer hit rate = 100.00%
+	!	Local  blocks:          0 read,          0 written, buffer hit rate = 0.00%
+	!	Direct blocks:          0 read,          0 written
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 28
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 31
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 33
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 36
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  4
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  5
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 15
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 38
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 40
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 44
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 47
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 16
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  6
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 12
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 48
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 49
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  8
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 11
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  7
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 23
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 32
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 37
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 27
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  3
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 17
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 21
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 10
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  2
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  9
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 13
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 50
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 43
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 20
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 14
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 18
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 29
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 42
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 30
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 45
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 51
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 52
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 53
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  EXECUTOR STATISTICS
+DETAIL:  ! system usage stats:
+	!	1.147862 elapsed 0.832052 user 0.120007 system sec
+	!	[0.848053 user 0.156009 sys total]
+	!	0/8 [0/224] filesystem blocks in/out
+	!	0/4 [0/964] page faults/reclaims, 0 [0] swaps
+	!	0 [0] signals rcvd, 0/0 [0/0] messages rcvd/sent
+	!	0/160 [5/262] voluntary/involuntary context switches
+	! buffer usage stats:
+	!	Shared blocks:         27 read,          0 written, buffer hit rate = 99.96%
+	!	Local  blocks:          0 read,          0 written, buffer hit rate = 0.00%
+	!	Direct blocks:          0 read,          0 written
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  EXECUTOR STATISTICS
+DETAIL:  ! system usage stats:
+	!	1.129215 elapsed 0.748046 user 0.132008 system sec
+	!	[1.596099 user 0.292018 sys total]
+	!	0/0 [0/224] filesystem blocks in/out
+	!	0/0 [0/965] page faults/reclaims, 0 [0] swaps
+	!	0 [0] signals rcvd, 0/0 [0/0] messages rcvd/sent
+	!	0/119 [6/386] voluntary/involuntary context switches
+	! buffer usage stats:
+	!	Shared blocks:          0 read,          0 written, buffer hit rate = 100.00%
+	!	Local  blocks:          0 read,          0 written, buffer hit rate = 0.00%
+	!	Direct blocks:          0 read,          0 written
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  EXECUTOR STATISTICS
+DETAIL:  ! system usage stats:
+	!	1.134754 elapsed 0.940059 user 0.072005 system sec
+	!	[2.536158 user 0.368023 sys total]
+	!	0/0 [0/232] filesystem blocks in/out
+	!	0/0 [0/965] page faults/reclaims, 0 [0] swaps
+	!	0 [0] signals rcvd, 0/0 [0/0] messages rcvd/sent
+	!	0/136 [7/526] voluntary/involuntary context switches
+	! buffer usage stats:
+	!	Shared blocks:          0 read,          0 written, buffer hit rate = 100.00%
+	!	Local  blocks:          0 read,          0 written, buffer hit rate = 0.00%
+	!	Direct blocks:          0 read,          0 written
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  received smart shutdown request
+LOG:  shutting down
+LOG:  database system is shut down

@@ -1,0 +1,487 @@
+FATAL:  lock file "postmaster.pid" already exists
+HINT:  Is another postmaster (PID 4542) running in data directory "/home/ubuntu/pgsql/data"?
+LOG:  using buffer replacement policy: lru
+LOG:  database system was shut down at 2012-10-24 15:32:54 PDT
+LOG:  database system is ready to accept connections
+LOG:  GRADING: EVICT  0
+LOG:  GRADING: EVICT  1
+LOG:  GRADING: EVICT 22
+LOG:  GRADING: EVICT 19
+LOG:  GRADING: EVICT 20
+LOG:  GRADING: EVICT 25
+LOG:  GRADING: EVICT 26
+LOG:  GRADING: EVICT 28
+LOG:  GRADING: EVICT 31
+LOG:  GRADING: EVICT 23
+LOG:  GRADING: EVICT  0
+LOG:  GRADING: EVICT  1
+LOG:  GRADING: EVICT 22
+LOG:  GRADING: EVICT 19
+LOG:  GRADING: EVICT 24
+LOG:  GRADING: EVICT 20
+LOG:  GRADING: EVICT 25
+LOG:  GRADING: EVICT 27
+LOG:  GRADING: EVICT 18
+LOG:  GRADING: EVICT  4
+LOG:  GRADING: EVICT  5
+LOG:  GRADING: EVICT  6
+LOG:  GRADING: EVICT  7
+LOG:  GRADING: EVICT  8
+LOG:  GRADING: EVICT 13
+LOG:  GRADING: EVICT 14
+LOG:  GRADING: EVICT 15
+LOG:  GRADING: EVICT 29
+LOG:  GRADING: EVICT 30
+LOG:  GRADING: EVICT 26
+LOG:  GRADING: EVICT  2
+LOG:  GRADING: EVICT 23
+LOG:  GRADING: EVICT  9
+LOG:  GRADING: EVICT 19
+LOG:  GRADING: EVICT 25
+LOG:  GRADING: EVICT 16
+LOG:  GRADING: EVICT 29
+LOG:  GRADING: EVICT 12
+LOG:  GRADING: EVICT 27
+LOG:  GRADING: EVICT 18
+LOG:  GRADING: EVICT  9
+LOG:  GRADING: EVICT 11
+LOG:  GRADING: EVICT 25
+LOG:  GRADING: EVICT  6
+LOG:  GRADING: EVICT  5
+LOG:  GRADING: EVICT  7 at character 15
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT  8 at character 15
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 13 at character 15
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 14 at character 15
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 15 at character 15
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT  3 at character 15
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 17 at character 15
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 21 at character 15
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 10
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 16
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 19
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 29
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 30
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 22
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 31
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 26
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT  4
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT  2
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT  1
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 23
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 24
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 12
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 27
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT  9
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 18
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 11
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 25
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT  5
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT  6
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT  7
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 13
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT  8
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 14
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 15
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT  3
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT  0
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 21
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 17
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 20
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 28
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 10
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 19
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 29
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  EXECUTOR STATISTICS
+DETAIL:  ! system usage stats:
+	!	0.062090 elapsed 0.000000 user 0.016001 system sec
+	!	[0.004000 user 0.036002 sys total]
+	!	0/8 [0/208] filesystem blocks in/out
+	!	0/20 [0/770] page faults/reclaims, 0 [0] swaps
+	!	0 [0] signals rcvd, 0/0 [0/0] messages rcvd/sent
+	!	1/36 [3/103] voluntary/involuntary context switches
+	! buffer usage stats:
+	!	Shared blocks:         27 read,          0 written, buffer hit rate = 0.00%
+	!	Local  blocks:          0 read,          0 written, buffer hit rate = 0.00%
+	!	Direct blocks:          0 read,          0 written
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  EXECUTOR STATISTICS
+DETAIL:  ! system usage stats:
+	!	0.021349 elapsed 0.000000 user 0.012001 system sec
+	!	[0.004000 user 0.048003 sys total]
+	!	0/0 [0/208] filesystem blocks in/out
+	!	0/0 [0/773] page faults/reclaims, 0 [0] swaps
+	!	0 [0] signals rcvd, 0/0 [0/0] messages rcvd/sent
+	!	0/23 [4/130] voluntary/involuntary context switches
+	! buffer usage stats:
+	!	Shared blocks:          0 read,          0 written, buffer hit rate = 100.00%
+	!	Local  blocks:          0 read,          0 written, buffer hit rate = 0.00%
+	!	Direct blocks:          0 read,          0 written
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  EXECUTOR STATISTICS
+DETAIL:  ! system usage stats:
+	!	0.022185 elapsed 0.004000 user 0.012001 system sec
+	!	[0.008000 user 0.064004 sys total]
+	!	0/0 [0/208] filesystem blocks in/out
+	!	0/0 [0/773] page faults/reclaims, 0 [0] swaps
+	!	0 [0] signals rcvd, 0/0 [0/0] messages rcvd/sent
+	!	0/26 [6/158] voluntary/involuntary context switches
+	! buffer usage stats:
+	!	Shared blocks:          0 read,          0 written, buffer hit rate = 100.00%
+	!	Local  blocks:          0 read,          0 written, buffer hit rate = 0.00%
+	!	Direct blocks:          0 read,          0 written
+STATEMENT:  SELECT * FROM raw_r_tuples;
+LOG:  GRADING: EVICT 16 at character 31
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 30 at character 31
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 31 at character 31
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 26 at character 31
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 22 at character 31
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  4 at character 31
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  2 at character 31
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  1
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 23
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 24
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 12
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 27
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  9
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 18
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 11
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 25
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  5
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  6
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  7
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 13
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  8
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 14
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 15
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  3
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  0
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 21
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 17
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 20
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 28
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 10
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 19
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 29
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 16
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 30
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 22
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  2
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  4
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  1
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 23
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 24
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 27
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  9
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 12
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 18
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 11
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 25
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  6
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  5
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 31
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 26
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  7
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 13
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 14
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  3
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  0
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 15
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 21
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  8
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 17
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 20
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 15
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 21
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  8
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 17
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 20
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 15
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 21
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  8
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 17
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 20
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 15
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 21
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  8
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 17
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 20
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 15
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 21
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  8
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 17
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 20
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 15
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  EXECUTOR STATISTICS
+DETAIL:  ! system usage stats:
+	!	1.495480 elapsed 0.864054 user 0.136008 system sec
+	!	[0.872054 user 0.204012 sys total]
+	!	0/8 [0/240] filesystem blocks in/out
+	!	0/4 [0/835] page faults/reclaims, 0 [0] swaps
+	!	0 [0] signals rcvd, 0/0 [0/0] messages rcvd/sent
+	!	0/254 [7/443] voluntary/involuntary context switches
+	! buffer usage stats:
+	!	Shared blocks:         54 read,          0 written, buffer hit rate = 99.92%
+	!	Local  blocks:          0 read,          0 written, buffer hit rate = 0.00%
+	!	Direct blocks:          0 read,          0 written
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 21
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  8
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 17
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 20
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 15
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 21
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  8
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 17
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 20
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 15
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 21
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  8
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 17
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 20
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 15
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 21
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  8
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 17
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 20
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 15
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 21
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  8
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 17
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 20
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 15
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 21
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  8
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  EXECUTOR STATISTICS
+DETAIL:  ! system usage stats:
+	!	1.391452 elapsed 0.824052 user 0.136009 system sec
+	!	[1.700106 user 0.340021 sys total]
+	!	0/16 [0/256] filesystem blocks in/out
+	!	0/0 [0/836] page faults/reclaims, 0 [0] swaps
+	!	0 [0] signals rcvd, 0/0 [0/0] messages rcvd/sent
+	!	0/211 [8/658] voluntary/involuntary context switches
+	! buffer usage stats:
+	!	Shared blocks:         27 read,          0 written, buffer hit rate = 99.96%
+	!	Local  blocks:          0 read,          0 written, buffer hit rate = 0.00%
+	!	Direct blocks:          0 read,          0 written
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 17
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 20
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 15
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 21
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  8
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 17
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 20
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 15
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 21
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  8
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 17
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 20
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 15
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 21
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  8
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 17
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 20
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 15
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 21
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  8
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 17
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 20
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 15
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 21
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT  8
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 17
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  GRADING: EVICT 20
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  EXECUTOR STATISTICS
+DETAIL:  ! system usage stats:
+	!	1.439115 elapsed 0.836052 user 0.112007 system sec
+	!	[2.536158 user 0.452028 sys total]
+	!	0/8 [0/264] filesystem blocks in/out
+	!	0/0 [0/836] page faults/reclaims, 0 [0] swaps
+	!	0 [0] signals rcvd, 0/0 [0/0] messages rcvd/sent
+	!	0/200 [9/861] voluntary/involuntary context switches
+	! buffer usage stats:
+	!	Shared blocks:         27 read,          0 written, buffer hit rate = 99.96%
+	!	Local  blocks:          0 read,          0 written, buffer hit rate = 0.00%
+	!	Direct blocks:          0 read,          0 written
+STATEMENT:  SELECT * FROM raw_r_tuples r, raw_s_tuples s WHERE r.pkey = s.pkey;
+LOG:  received smart shutdown request
+LOG:  shutting down
+LOG:  database system is shut down

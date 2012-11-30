@@ -235,12 +235,15 @@ Nested Loop
 90.86
 ]]></question>
 
+<<<<<<< HEAD
 <question id="5d"
   text="What relations are sorted in this plan, and why?">
 <![CDATA[
 We were told on piazza that this question won't be graded.
 ]]></question>
 
+=======
+>>>>>>> 1c2301ad2d9c72fb4dd0f49aeb3631aa3992ca72
 <!--
 Question 6 THREE-WAY JOIN
 

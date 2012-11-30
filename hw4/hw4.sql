@@ -4,9 +4,9 @@ create table financials (id int primary key, name varchar(256), state varchar(10
 
 create table students (id int primary key, name varchar(256), school int);
 
-copy rankings from '$HOME/fa12/hw4/usnews.data' delimiters ',' with NULL '*';
-copy financials from '$HOME/fa12/hw4/aaup.data' delimiters ',' with NULL '*';
-copy students from '$HOME/fa12/hw4/students.dat' delimiters ',';
+copy rankings from '/home/ubuntu/CS186/fa12/hw4/usnews.data' delimiters ',' with NULL '*';
+copy financials from '/home/ubuntu/CS186/fa12/hw4/aaup.data' delimiters ',' with NULL '*';
+copy students from '/home/ubuntu/CS186/fa12/hw4/students.dat' delimiters ',';
 
 create index gradrate_idx on rankings(gradrate);
 

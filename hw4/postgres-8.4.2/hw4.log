@@ -2,3 +2,97 @@ LOG:  using buffer replacement policy: clock
 LOG:  database system was shut down at 2012-10-24 18:17:44 PDT
 LOG:  database system is ready to accept connections
 LOG:  autovacuum launcher started
+LOG:  using buffer replacement policy: clock
+LOG:  database system was shut down at 2012-10-29 14:33:34 PDT
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  could not open file "$HOME/fa12/hw4/usnews.data" for reading: No such file or directory
+STATEMENT:  copy rankings from '$HOME/fa12/hw4/usnews.data' delimiters ',' with NULL '*';
+ERROR:  could not open file "$HOME/fa12/hw4/aaup.data" for reading: No such file or directory
+STATEMENT:  copy financials from '$HOME/fa12/hw4/aaup.data' delimiters ',' with NULL '*';
+ERROR:  could not open file "$HOME/fa12/hw4/students.dat" for reading: No such file or directory
+STATEMENT:  copy students from '$HOME/fa12/hw4/students.dat' delimiters ',';
+ERROR:  database "colleges" already exists
+STATEMENT:  CREATE DATABASE colleges;
+	
+ERROR:  relation "rankings" already exists
+STATEMENT:  create table rankings (id int primary key, name varchar(256), state varchar(10), public int, mathSAT int, verbalSAT int, combinedSAT int, ACT int, firstQMathSAT int, thirdQMathSAT int, firstQVerbalSAT int, thirdQVerbalSAT int, firstQACT int, thirdQACT int, applications int, accepted int, enrolled int, PercentInTop10PercentofHS float, PercentInTop25PercentofHS float, fulltimeUndergrads int, parttimeUndergrads int, instateTuition int, outofstateTuition int, roomAndBoardCosts int, RoomCosts int, BoardCosts int, additionalFees int, bookCosts int, personalSpending int, PctFacultyWithPhD float, PctFacultyWithTerminalDeg float, StudentFacultyRatio float, PctAlumniWhoDonate float, InstructionalSpendingPerStudent float, GradRate float);
+ERROR:  relation "financials" already exists
+STATEMENT:  create table financials (id int primary key, name varchar(256), state varchar(10), type varchar(10), fullprofsalary float, associateprofsalary float, assistantprofsalary float, aveSalary float, fullprofcompensation float, associateprofcompensation float, assistantprofcompensation float, avecompensation float, numFullProf int, numAssociateProf int, numAssistantProf int, numInstructors int, numFaculty int);
+ERROR:  relation "students" already exists
+STATEMENT:  create table students (id int primary key, name varchar(256), school int);
+ERROR:  relation "gradrate_idx" already exists
+STATEMENT:  create index gradrate_idx on rankings(gradrate);
+ERROR:  syntax error at or near "/" at character 1
+STATEMENT:  /d
+	;
+ERROR:  syntax error at or near "/" at character 1
+STATEMENT:  /d
+	;
+ERROR:  syntax error at or near "l" at character 1
+STATEMENT:  l
+	;
+ERROR:  syntax error at or near "query" at character 1
+STATEMENT:  query pg_stats;
+ERROR:  syntax error at or near "list" at character 1
+STATEMENT:  list
+	;
+ERROR:  syntax error at or near "list" at character 1
+STATEMENT:  list tables;
+ERROR:  unrecognized configuration parameter "tables"
+STATEMENT:  show tables;
+ERROR:  syntax error at or near ";" at character 5
+STATEMENT:  show;
+ERROR:  column "state" does not exist at character 8
+STATEMENT:  select state from pg_stats;
+ERROR:  unrecognized configuration parameter "columns"
+STATEMENT:  show columns;
+ERROR:  syntax error at or near "select" at character 24
+STATEMENT:  select * from pg_stats
+	select * from pg_stats
+	select * from pg_stats
+ERROR:  syntax error at or near "/" at character 23
+STATEMENT:  select * from pg_stats/G
+	;
+ERROR:  column "state" does not exist at character 25
+STATEMENT:  explain select distinct state from pg_stats;
+ERROR:  column "rankings" does not exist at character 55
+STATEMENT:  explain select count(*) from pg_stats where tablename="rankings" and attname="state";
+ERROR:  column "ranking" does not exist at character 55
+STATEMENT:  explain select count(*) from pg_stats where tablename="ranking" and attname="state";
+ERROR:  syntax error at or near "describe" at character 1
+STATEMENT:  describe rankings;
+LOG:  using buffer replacement policy: clock
+LOG:  database system was shut down at 2012-11-03 13:41:16 PDT
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  syntax error at or near "studentfacultyratio_idx" at character 6
+STATEMENT:  drop studentfacultyratio_idx
+	;
+ERROR:  syntax error at or near "studentfacultyratio_idx" at character 6
+STATEMENT:  drop studentfacultyratio_idx;
+ERROR:  syntax error at or near ";" at character 32
+STATEMENT:  select r.name from rankings r, ;
+ERROR:  syntax error at or near "sort" at character 62
+STATEMENT:  select r.name from rankings r, financials f where r.public=1 sort by f.avesalary;
+ERROR:  syntax error at or near "sortby" at character 62
+STATEMENT:  select r.name from rankings r, financials f where r.public=1 sortby f.avesalary;
+ERROR:  syntax error at or near "sort" at character 64
+STATEMENT:  select r.name from rankings r, financials f where r.public='1' sort by f.avesalary;
+ERROR:  syntax error at or near "esalary" at character 95
+STATEMENT:  select r.name, f.avesalary from rankings r, financials f where r.public='1' order by f.avDESC esalary;
+ERROR:  relation "financial" does not exist at character 39
+STATEMENT:  select f.avesalary - f.avesalary from financial f;
+ERROR:  column r.outofstatetution does not exist at character 35
+STATEMENT:  select r.name, r.instatetuition - r.outofstatetution from rankings r;
+ERROR:  syntax error at or near "diff" at character 202
+STATEMENT:  select r.name, abs(r.instatetuition - r.outofstatetuition) from rankings r where r.public=1
+	 and (fulltimeundergrads > 0 or parttimeundergrads > 0) order by abs(r.instatetuition - r.outofstatetuition) diff;
+ERROR:  column "r.name" must appear in the GROUP BY clause or be used in an aggregate function at character 8
+STATEMENT:  select r.name, max(abs(r.instatetuition - r.outofstatetuition)) as diff from rankings r, students s where r.public=1
+	 and s.school=r.id order by diff desc;
+LOG:  unexpected EOF on client connection
+LOG:  received smart shutdown request
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down

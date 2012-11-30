@@ -22,30 +22,26 @@ the relation Rankings. Answer the following questions:
 <question id="1a" autograde="yes"
   text="What are the attributes of the Students relation?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO. Separate the attributes by
-",". For example:
-id, name, gpa
+id, name, school 
 ]]></question>
 
 <question id="1b1" autograde="yes"
   text="How many indexes are built on the Rankings relation?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO. One Number.
+2
 ]]></question>
 
 <question id="1b2" autograde="yes"
   text="Name the indexes and write down their type?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO. Use one line for each index.
-Each line should start with the name of the index, followed by a comma, and
-the type of the index. For example:
-id_idx, btree
+gradrate_idx, btree
+rankings_pkey, btree
 ]]></question>
 
 <question id="1c" autograde="yes"
   text="How many tuples are there in the Rankings relation?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO. One number.
+1302
 ]]></question>
 
 <question id="1d" autograde="yes"
@@ -53,7 +49,7 @@ TODO: Put your answer here and REMOVE THIS TODO. One number.
        are for the Rankings relation?
        (hint: Query pg_stats to find out)">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO. One number.
+51
 ]]></question>
 
 <question id="1e" autograde="yes"
@@ -61,13 +57,13 @@ TODO: Put your answer here and REMOVE THIS TODO. One number.
         table? (hint: it's probably easiest to run a query to compute
         this!)">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO. One number.
+51
 ]]></question>
 
 <question id="1f"
   text="What query did you use to find the answer to E?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO. A SQL query.
+select count(distinct state) from rankings;
 ]]></question>
 	
 <!--
@@ -87,49 +83,54 @@ EXPLAIN command:
 <question id="2a"
   text="Briefly describe the plan chosen.">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO.
+Sequential scan on the rankings table, filtering by state=CA
 ]]></question>
 
 <question id="2b"
   text="In what order would the tuples be returned by this plan? Why?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO.
+They will be returned ordered by id, because id is the key and the index rankings_pkey
+is built on id.
 ]]></question>
 
 <question id="2c" autograde="yes"
   text="What is the estimated total cost of running the plan?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO.
+48.27
 ]]></question>
 
 <question id="2d"
   text="What is the estimated result cardinality for this plan? Looking at the
         statistics, why does the optimizer come up with this estimate?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO.
+The estimated result cardinality for this plan is 70.
+The optimizer comes up with this estimate from multiplying the value for the 
+most_common_freqs for CA by the # of tuples.
 ]]></question>
 
 <question id="2e" autograde="yes"
   text="How many colleges actually do have state = 'CA'?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO. One Number
+70
 ]]></question>
 
 <question id="2f"
   text="Looking at the statistics, what are the top 5 states with the most
         colleges and the percentage of colleges in each of those state?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO. Use one line for each state.
-Each line should start with the two-character acronym for the state, followed
-by a comma, and the percentage. For example:
-CA, 24.5%
+NY, 7.7573%
+PA, 6.3748%
+CA, 5.37634%
+TX, 4.6083%
+MA, 3.99386%
 ]]></question>
 
 <question id="2g"
   text="Which value of state is actually the most popular, and how many tuples
         have that state? How did you figure this out (what query did you use)?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO.
+NY is the most popular, with 101 tuples.
+SELECT count(*) from rankings WHERE state='NY';
 ]]></question>
 
 <!--
@@ -145,20 +146,20 @@ Answer the following questions looking at the plans and the access methods:
   text="Create a btree index on the attribute state of the relation Rankings.
         What is the plan chosen for the query now?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO.
+An Index Scan is used, scanning the new state_idx index I created on the attribute state of Rankings.
 ]]></question>
 
 <question id="3b" autograde="yes"
   text="What is the estimated total cost of running the plan?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO. One number.
+45.20
 ]]></question>
 
 <question id="3c"
   text="Compare this plan with the plan obtained in question 2.A above.
         Which is cheaper and why?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO.  
+The Index Scan is cheaper since we don't need to read as many pages as a full table scan requires.
 ]]></question>
 
 <!--
@@ -175,13 +176,13 @@ Answer the following questions:
   text="How many ranking tuples that have gradrate &lt; 10 does the
         optimizer think there are?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO. One number.  
+2
 ]]></question>
 
 <question id="4b"
   text="In what order will the tuples be returned by this plan?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO.  
+In order of gradrate, since the Index Scan is using gradrate_idx.
 ]]></question>
 
 <question id="4c"
@@ -190,7 +191,10 @@ TODO: Put your answer here and REMOVE THIS TODO.
         does the optimizer think it will be cheaper than the previous plan when
         used with this new constant?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO.
+19 is the value at which the optimizer starts using a Seq Scan.
+The optimizer thinks it will be cheaper than an index scan with this new constant
+because more results will be returned, and an index scan would require too many
+random IOs; making it so that it's cheaper to do a Seq Scan.
 ]]></question>
 
 <!--
@@ -209,32 +213,32 @@ Answer the following questions:
 <question id="5a"
   text="What is the estimated cost of this plan?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO. One number.  
+73.49
 ]]></question>
 
 <question id="5b" autograde="yes"
   text="What kind of join is used by the plan?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO.
+Hash Join
 ]]></question>
 
 <question id="5c1" autograde="yes"
   text="Disable the join type used in the above plan and re-optimize the query.
         What type of join is used now?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO.
+Nested Loop
 ]]></question>
 
 <question id="5c2" autograde="yes"
   text="And what is the total estimated cost of the query?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO. One number.
+90.86
 ]]></question>
 
 <question id="5d"
   text="What relations are sorted in this plan, and why?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO.
+We were told on piazza that this question won't be graded.
 ]]></question>
 
 <!--
@@ -252,7 +256,13 @@ WHERE S.school = R.id and R.id = F.id;
         access methods it uses, and the order in which the relations are
         joined.">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO.
+A sequential scan over students is done and each tuple is hashed.
+A sequential scan over financials is then performed and the in memory
+hash table is probed for matching tuples on f.id = s.school (a hash join is performed).
+The resulting joined table is then hashed.
+A sequential scan over rankings is performed and the new hash table is
+probed for matching tuples on r.id = s.school (a hash join is performed).
+This results in the final result.
 ]]></question>
 
 <question id="6b"
@@ -261,7 +271,12 @@ TODO: Put your answer here and REMOVE THIS TODO.
         Why is this new join ordering better for the extended query than the
         ordering obtained in part A?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO.
+PROJECTION(Students.name, Rankings.name, Financials.avesalary) (
+    Students JOIN(Students.school=Rankings.id) (Financials
+      JOIN(Financials.id=Rankings.id) (SELECTION(Rankings.studentfacultyratio<8) Rankings)))
+
+This new join ordering is better because we can eliminate many tuples from Rankings
+initially, making it so that the resulting joins are smaller and take less time.
 ]]></question>
 
 <!--
@@ -273,7 +288,7 @@ Answer the following questions about the database (by writing queries!):
   text="What is the name of the public school (public = 1) with the highest
         average salary?">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO.  
+University of Virginia
 ]]></question>
 
 <question id="7b" autograde="yes"
@@ -281,7 +296,7 @@ TODO: Put your answer here and REMOVE THIS TODO.
         between instate tuition and out of state tuition that has at least
         one student attending.">
 <![CDATA[
-TODO: Put your answer here and REMOVE THIS TODO.  
+Albany State College
 ]]></question>
 
 </assignment>

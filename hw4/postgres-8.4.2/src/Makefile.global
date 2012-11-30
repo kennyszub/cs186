@@ -34,7 +34,7 @@ MAJORVERSION = 8.4
 
 # Support for VPATH builds
 vpath_build = no
-abs_top_srcdir = /home/saasbook/repos/fa12/fa12/hw4/postgres-8.4.2
+abs_top_srcdir = /home/ubuntu/CS186/fa12/hw4/postgres-8.4.2
 
 ifneq ($(vpath_build),yes)
 top_srcdir = $(top_builddir)
@@ -46,7 +46,7 @@ srcdir = $(top_srcdir)/$(subdir)
 endif
 
 # Saved arguments from configure
-configure_args =  '--enable-depend' '--enable-cassert' '--enable-debug' '--prefix=/home/saasbook/pgsql'
+configure_args =  '--enable-depend' '--enable-cassert' '--enable-debug' '--prefix=/home/ubuntu/pgsql'
 
 
 ##########################################################################
@@ -66,7 +66,7 @@ ifndef PGXS
 # Note that prefix, exec_prefix, and datarootdir aren't defined in a PGXS build;
 # makefiles may only use the derived variables such as bindir.
 
-prefix := /home/saasbook/pgsql
+prefix := /home/ubuntu/pgsql
 exec_prefix := ${prefix}
 datarootdir := ${prefix}/share
 
@@ -218,9 +218,9 @@ CFLAGS = -O2 -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-stat
 
 # Kind-of compilers
 
-BISON = bison
+BISON = 
 BISONFLAGS =  $(YFLAGS)
-FLEX = /usr/bin/flex
+FLEX = 
 FLEXFLAGS =  $(LFLAGS)
 DTRACE = 
 DTRACEFLAGS = 

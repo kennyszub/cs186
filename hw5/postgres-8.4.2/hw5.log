@@ -1,0 +1,18 @@
+LOG:  using buffer replacement policy: clock
+LOG:  database system was shut down at 2012-11-29 20:21:57 PST
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+LOG:  QUERY STATISTICS
+DETAIL:  ! system usage stats:
+	!	1.790188 elapsed 0.008000 user 0.064004 system sec
+	!	[0.008000 user 0.068004 sys total]
+	!	0/10416 [0/10600] filesystem blocks in/out
+	!	0/148 [0/802] page faults/reclaims, 0 [0] swaps
+	!	0 [0] signals rcvd, 0/0 [0/0] messages rcvd/sent
+	!	219/176 [219/180] voluntary/involuntary context switches
+	! buffer usage stats:
+	!	Shared blocks:         13 read,          0 written, buffer hit rate = 79.69%
+	!	Local  blocks:          0 read,          0 written, buffer hit rate = 0.00%
+	!	Direct blocks:          0 read,          0 written
+STATEMENT:  CREATE DATABASE nums;
+	

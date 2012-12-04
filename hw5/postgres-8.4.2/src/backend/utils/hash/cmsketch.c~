@@ -17,7 +17,7 @@ cmsketch* init_sketch(uint32 width, uint32 depth) {
     return NULL;
   }
   sketch->cmdataWidth = width;
-  sketch->cmdataDetph = depth;
+  sketch->cmdataDepth = depth;
   return sketch;
 }
 
@@ -76,10 +76,14 @@ uint32 estimate(cmsketch* sketch, uint32 *bits) {
 
 /* set all values in the sketch to zero */
 void reset_sketch(cmsketch* sketch) {
-
+  uint32 sizeOfSketch = sketch->cmdataWidth * sketch->cmdataDepth;
+  uint32 i;
+  for (i = 0; i < sizeOfSketch; i++) {
+    sketch->cmdata[i] = 0;
+  }
 }
 
 /* destroy the sketch, freeing any memory it might be using */
 void destroy_sketch(cmsketch* sketch) {
-
+  pfree(sketch);
 }

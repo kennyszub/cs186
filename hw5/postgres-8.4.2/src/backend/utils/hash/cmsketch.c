@@ -7,6 +7,7 @@
 
 #include "postgres.h"
 #include "utils/cmsketch.h"
+#include "limits.h"
 
 /* initialize the count-min sketch for the specified width and depth */
 cmsketch* init_sketch(uint32 width, uint32 depth) {
@@ -17,7 +18,7 @@ cmsketch* init_sketch(uint32 width, uint32 depth) {
     return NULL;
   }
   sketch->cmdataWidth = width;
-  sketch->cmdataDetph = depth;
+  sketch->cmdataDepth = depth;
   return sketch;
 }
 

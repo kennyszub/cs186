@@ -1473,6 +1473,7 @@ approx_agg_per_input(AggState *aggstate, TupleTableSlot* outerSlot, Agg* agg)
 	/*
 	 * CS186-TODO: Implement your function to process each input tuple.
 	 */
+	 
   uint32 hash_values[agg->cm_depth];
   getTupleHashBits(aggstate, outerSlot, hash_values, agg->cm_width, agg->cm_depth);
   increment_bits(aggstate->sketch, hash_values);
@@ -1483,7 +1484,7 @@ approx_agg_per_input(AggState *aggstate, TupleTableSlot* outerSlot, Agg* agg)
   int minimum_freq = UINT_MAX;
   int index_min_freq;
   int num_items = aggstate->num_items_added;
-  
+
   
   for (i = 0; i < num_items; i++) {
     ApproxTopEntry *currEntry = aggstate->topKItems[i];
@@ -1498,7 +1499,7 @@ approx_agg_per_input(AggState *aggstate, TupleTableSlot* outerSlot, Agg* agg)
       index_min_freq = i;
     }
   }
-  
+
   ApproxTopEntry* entry = palloc0(sizeof(ApproxTopEntry));
   entry->tuple = ExecCopySlotMinimalTuple(outerSlot);
   entry->count = est;
@@ -1508,9 +1509,10 @@ approx_agg_per_input(AggState *aggstate, TupleTableSlot* outerSlot, Agg* agg)
     aggstate->num_items_added += 1;
   } else {
   // if we have more than k items, remove item with lowest freq
-    aggstate->topKItems[index_min_freq] = entry;
+    if (est > minimum_freq) {
+      aggstate->topKItems[index_min_freq] = entry;
+    }
   }
-  
 }
 
 /*
@@ -1631,9 +1633,10 @@ approx_agg_advance_iter(AggState *aggstate, Agg* agg)
 	 * the data structure you have written to keep track of frequencies.
 	 */
 	 int index = aggstate->iter_index;
-	 if (index < agg->approx_nkeep) {
+	 if (index < aggstate->num_items_added) {
 	    aggstate->iter_index += 1;
       return aggstate->topKItems[index];
+      
    } else {
      return NULL;
    }

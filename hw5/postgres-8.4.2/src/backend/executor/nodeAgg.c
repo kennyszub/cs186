@@ -1402,9 +1402,14 @@ approx_agg_init(AggState *aggstate)
 	/*
 	 * CS186-TODO: allocate any structures inside of aggstate that you will need.
 	 */
-  aggstate->topKItems = palloc0(sizeof(ApproxTopEntry) * agg->approx_nkeep);
+  aggstate->topKItems = palloc0(sizeof(ApproxTopEntry *) * agg->approx_nkeep);
+  for (i = 0; i < agg->approx_nkeep; i++) {
+    aggstate->topKItems[i] = palloc0(sizeof(ApproxTopEntry));
+  }
+  
   aggstate->sketch = init_sketch(agg->cm_width, agg->cm_depth);
   aggstate->num_items_added = 0;
+  aggstate->iter_index = 0;
 	 
 	 // End new stuff
 	
@@ -1471,7 +1476,7 @@ approx_agg_per_input(AggState *aggstate, TupleTableSlot* outerSlot, Agg* agg)
   uint32 hash_values[agg->cm_depth];
   getTupleHashBits(aggstate, outerSlot, hash_values, agg->cm_width, agg->cm_depth);
   increment_bits(aggstate->sketch, hash_values);
-  uint32 estimate = estimate(aggstate->sketch, hash_values);
+  uint32 est = estimate(aggstate->sketch, hash_values);
   
   int i;
   int k = agg->approx_nkeep;
@@ -1481,11 +1486,11 @@ approx_agg_per_input(AggState *aggstate, TupleTableSlot* outerSlot, Agg* agg)
   
   
   for (i = 0; i < num_items; i++) {
-    ApproxTopEntry currEntry = aggstate->topKItems[i];
-    bool equal = compare_tuple_with_approx_top_tuple(outerSlot, &currEntry, aggstate, agg);
+    ApproxTopEntry *currEntry = aggstate->topKItems[i];
+    bool equal = compare_tuple_with_approx_top_tuple(outerSlot, currEntry, aggstate, agg);
     // if freq_item is already in data structure
     if (equal) {
-      currEntry->count = estimate;
+      currEntry->count = est;
       return;
     }
     if (currEntry->count < minimum_freq) {
@@ -1494,9 +1499,9 @@ approx_agg_per_input(AggState *aggstate, TupleTableSlot* outerSlot, Agg* agg)
     }
   }
   
-  ApproxTopEntry entry;
-  entry.tuple = ExecCopySlotMinimalTuple(outerSlot);
-  entry.count = estimate;
+  ApproxTopEntry* entry = palloc0(sizeof(ApproxTopEntry));
+  entry->tuple = ExecCopySlotMinimalTuple(outerSlot);
+  entry->count = est;
   //if our data structure still has space and tuple doesn't exist in data structure
   if (num_items < k) {
     aggstate->topKItems[num_items] = entry;
@@ -1508,7 +1513,6 @@ approx_agg_per_input(AggState *aggstate, TupleTableSlot* outerSlot, Agg* agg)
   
 }
 
-
 /*
  * This is run after Phase 1 and before Phase 2 -- all this should do is allow you to
  * run Phase 2 multiple times after Phase 1. You shouldn't have to deallocate anything!
@@ -1519,8 +1523,9 @@ approx_agg_reset_iter(AggState *aggstate)
 	/*
 	 * CS186-TODO: Any code to reset the aggstate for your approx function should go here.
 	 */
- 	
+ 	aggstate->iter_index = 0;
 }
+
 
 /* 
  * PHASE 2.
@@ -1584,7 +1589,8 @@ agg_retrieve_cmsketch(AggState *aggstate)
 		ExecStoreMinimalTuple(tuple->tuple, firstSlot, false);
 
 		old_cxt = MemoryContextSwitchTo(tmp_cxt);
-		aggvalues[0] = Int64GetDatum(0 /* CS186-TODO: Set the count for this group here */);
+		/* CS186-TODO: Set the count for this group here */
+		aggvalues[0] = Int64GetDatum(tuple->count);
 
 		/* Our agg values are never null */
 		aggnulls[0] = false;
@@ -1624,7 +1630,13 @@ approx_agg_advance_iter(AggState *aggstate, Agg* agg)
 	 * CS186-TODO: You will need to implement this function to walk over
 	 * the data structure you have written to keep track of frequencies.
 	 */
-    return NULL;
+	 int index = aggstate->iter_index;
+	 if (index < agg->approx_nkeep) {
+	    aggstate->iter_index += 1;
+      return aggstate->topKItems[index];
+   } else {
+     return NULL;
+   }
 }
 
 

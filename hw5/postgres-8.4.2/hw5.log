@@ -16,3 +16,12 @@ DETAIL:  ! system usage stats:
 	!	Direct blocks:          0 read,          0 written
 STATEMENT:  CREATE DATABASE nums;
 	
+LOG:  received fast shutdown request
+LOG:  aborting any active transactions
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  using buffer replacement policy: clock
+LOG:  database system was shut down at 2012-12-03 20:33:22 PST
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started

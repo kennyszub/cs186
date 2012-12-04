@@ -1531,9 +1531,10 @@ typedef struct AggState
 	TupleTableSlot *tempslot;  /* slot used for transferring temp data */
 
 	/* CS186-TODO: Add any extra fields you need in AggState here */
-	ApproxTopEntry *topKItems;
+	ApproxTopEntry **topKItems;
 	cmsketch *sketch;
 	int num_items_added;
+	int iter_index;
 } AggState;
 
 /* ----------------

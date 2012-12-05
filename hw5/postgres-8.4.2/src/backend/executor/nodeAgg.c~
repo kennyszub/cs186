@@ -1509,7 +1509,7 @@ approx_agg_per_input(AggState *aggstate, TupleTableSlot* outerSlot, Agg* agg)
     aggstate->num_items_added += 1;
   } else {
   // if we have more than k items, remove item with lowest freq
-    if (est > minimum_freq)
+    if (est > minimum_freq) {
       aggstate->topKItems[index_min_freq] = entry;
     }
   }

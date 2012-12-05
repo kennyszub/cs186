@@ -36,108 +36,101 @@ make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/common'
 make -C gist all
 make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/parser'
+make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/catalog'
 make[3]: Nothing to be done for `all'.
 make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/parser'
 make -C executor all
+make[3]: Nothing to be done for `all'.
+make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/catalog'
+make -C foreign all
 make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/gist'
 make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/gist'
 make -C hash all
-make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/catalog'
-make[3]: Nothing to be done for `all'.
-make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/catalog'
-make -C foreign all
 make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/foreign'
 make[3]: Nothing to be done for `all'.
 make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/foreign'
 make -C lib all
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/hash'
-make[4]: Nothing to be done for `all'.
-make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/hash'
-make -C heap all
 make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/lib'
 make[3]: Nothing to be done for `all'.
 make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/lib'
 make -C libpq all
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/hash'
 make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/commands'
 make[3]: Nothing to be done for `all'.
 make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/commands'
 make -C main all
+make[4]: Nothing to be done for `all'.
+make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/hash'
+make -C heap all
+make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/libpq'
+make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/main'
+make[3]: Nothing to be done for `all'.
+make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/libpq'
+make -C nodes all
+make[3]: Nothing to be done for `all'.
+make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/main'
+make -C optimizer all
 make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/heap'
+make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/optimizer'
 make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/heap'
 make -C index all
-make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/executor'
-make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/main'
-make[3]: Nothing to be done for `all'.
-make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/main'
-make -C nodes all
-make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/libpq'
-make[3]: Nothing to be done for `all'.
-make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/libpq'
-make -C optimizer all
-gcc -O2 -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -fno-strict-aliasing -fwrapv -g -I../../../src/include -D_GNU_SOURCE   -c -o nodeAgg.o nodeAgg.c -MMD -MP -MF .deps/nodeAgg.Po
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/index'
-make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/optimizer'
 make -C geqo all
+make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/executor'
+make[3]: Nothing to be done for `all'.
+make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/executor'
+make -C port all
+make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/nodes'
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/index'
 make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/index'
 make -C nbtree all
-make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/nodes'
 make[3]: Nothing to be done for `all'.
 make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/nodes'
-make -C port all
-make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/port'
-make[3]: Nothing to be done for `all'.
-make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/port'
 make -C postmaster all
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/nbtree'
 make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/optimizer/geqo'
-make[4]: Nothing to be done for `all'.
-make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/nbtree'
-make -C transam all
 make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/optimizer/geqo'
 make -C path all
-make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/postmaster'
+make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/port'
 make[3]: Nothing to be done for `all'.
-make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/postmaster'
+make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/port'
 make -C regex all
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/transam'
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/nbtree'
 make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/regex'
-make[4]: Nothing to be done for `all'.
-make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/transam'
-make -C gin all
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/optimizer/path'
-make[4]: Nothing to be done for `all'.
-make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/optimizer/path'
-make -C plan all
 make[3]: Nothing to be done for `all'.
 make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/regex'
 make -C rewrite all
+make[4]: Nothing to be done for `all'.
+make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/nbtree'
+make -C transam all
+make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/postmaster'
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/optimizer/path'
+make[3]: Nothing to be done for `all'.
+make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/postmaster'
+make -C storage all
+make[4]: Nothing to be done for `all'.
+make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/optimizer/path'
+make -C plan all
+make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage'
+make -C buffer all
 make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/rewrite'
 make[3]: Nothing to be done for `all'.
 make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/rewrite'
-make -C storage all
+make -C tcop all
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/buffer'
 make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/optimizer/plan'
-make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage'
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/transam'
 make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/optimizer/plan'
-make -C buffer all
 make -C prep all
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/gin'
-make[4]: Nothing to be done for `all'.
-make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/gin'
-make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access'
-make -C tcop all
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/optimizer/prep'
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/buffer'
 make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/buffer'
 make -C file all
 make[4]: Nothing to be done for `all'.
-make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/optimizer/prep'
-make -C util all
+make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/transam'
+make -C gin all
 make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/tcop'
 make[3]: Nothing to be done for `all'.
 make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/tcop'
@@ -146,107 +139,103 @@ make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/back
 make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/file'
 make -C freespace all
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/optimizer/prep'
+make[4]: Nothing to be done for `all'.
+make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/optimizer/prep'
+make -C util all
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/gin'
+make[4]: Nothing to be done for `all'.
+make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access/gin'
+make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/access'
+make -C utils all
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/freespace'
+make[4]: Nothing to be done for `all'.
+make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/freespace'
+make -C ipc all
+make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/tsearch'
+make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils'
+make -C adt all
+make[3]: Nothing to be done for `all'.
+make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/tsearch'
+make -C ../../src/timezone all
 make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/optimizer/util'
 make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/optimizer/util'
 make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/optimizer'
-make -C utils all
-make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/tsearch'
-make[3]: Nothing to be done for `all'.
-make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/tsearch'
-make -C ../../src/timezone all
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/freespace'
-make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/timezone'
-make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils'
-make -C ../../src/port all
-make -C adt all
+make -C cache all
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/ipc'
 make[4]: Nothing to be done for `all'.
-make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/freespace'
-make -C ipc all
+make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/ipc'
+make -C large_object all
+make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/timezone'
+make -C ../../src/port all
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/large_object'
+make[4]: Nothing to be done for `all'.
+make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/large_object'
+make -C lmgr all
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/cache'
 make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/port'
 make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/port'
 make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/timezone'
-make -C large_object all
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/ipc'
-make[4]: Nothing to be done for `all'.
-make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/ipc'
-make -C lmgr all
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/large_object'
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/lmgr'
-make[4]: Nothing to be done for `all'.
-make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/lmgr'
 make -C page all
 make[4]: Nothing to be done for `all'.
-make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/large_object'
-make -C smgr all
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/page'
-make[4]: Nothing to be done for `all'.
-make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/page'
-make -C cache all
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/smgr'
-make[4]: Nothing to be done for `all'.
-make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/smgr'
-make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage'
-make -C error all
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/cache'
-make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/cache'
-make -C fmgr all
+make -C error all
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/lmgr'
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/page'
 make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/error'
 make[4]: Nothing to be done for `all'.
+make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/page'
+make -C smgr all
+make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/error'
+make -C fmgr all
+make[4]: Nothing to be done for `all'.
+make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/lmgr'
 make -C hash all
 make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/fmgr'
 make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/fmgr'
 make -C init all
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/smgr'
+make[4]: Nothing to be done for `all'.
+make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage/smgr'
+make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/storage'
+make -C mb all
 make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/hash'
 make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/hash'
-make -C mb all
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/init'
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/mb'
-make[4]: Nothing to be done for `all'.
-make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/mb'
 make -C misc all
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/init'
 make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/init'
 make -C mmgr all
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/adt'
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/mb'
 make[4]: Nothing to be done for `all'.
-make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/adt'
+make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/mb'
 make -C resowner all
-nodeAgg.c: In function ‘getTupleHashBits’:make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/mmgr'
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/misc'
-
-nodeAgg.c:1305:30: warning: integer overflow in expression [-Woverflow]
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/adt'
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/mmgr'
 make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/mmgr'
 make -C sort all
-nodeAgg.c: In function ‘approx_agg_per_input’:
-nodeAgg.c:1480:3: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
-nodeAgg.c:1503:3: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/resowner'
-
+make[4]: Nothing to be done for `all'.
+make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/adt'
+make -C time all
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/misc'
 make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/misc'
-make -C time all
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/resowner'
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/sort'
 make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/resowner'
-nodeAgg.c: At top level:
-nodeAgg.c:1365:1: warning: ‘set_approx_top_entry_from_slot’ defined but not used [-Wunused-function]
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/sort'
 make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/sort'
 make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/time'
 make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/time'
 make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils'
-nodeAgg.c: In function ‘approx_agg_per_input’:
-nodeAgg.c:1513:26: warning: ‘index_min_freq’ may be used uninitialized in this function [-Wuninitialized]
-touch objfiles.txt
-make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/executor'
-gcc -O2 -Wall -Wmissing-prototypes -Wpointer-arith -Wdeclaration-after-statement -Wendif-labels -fno-strict-aliasing -fwrapv -g -L../../src/port -Wl,--as-needed -Wl,-rpath,'/home/ubuntu/pgsql/lib' -Wl,-E access/common/heaptuple.o access/common/indextuple.o access/common/printtup.o access/common/reloptions.o access/common/scankey.o access/common/tupdesc.o access/gist/gist.o access/gist/gistutil.o access/gist/gistxlog.o access/gist/gistvacuum.o access/gist/gistget.o access/gist/gistscan.o access/gist/gistproc.o access/gist/gistsplit.o access/hash/hash.o access/hash/hashfunc.o access/hash/hashinsert.o access/hash/hashovfl.o access/hash/hashpage.o access/hash/hashscan.o access/hash/hashsearch.o access/hash/hashsort.o access/hash/hashutil.o access/heap/heapam.o access/heap/hio.o access/heap/pruneheap.o access/heap/rewriteheap.o access/heap/syncscan.o access/heap/tuptoaster.o access/heap/visibilitymap.o access/index/genam.o access/index/indexam.o access/nbtree/nbtcompare.o access/nbtree/nbtinsert.o access/nbtree/nbtpage.o access/nbtree/nbtree.o access/nbtree/nbtsearch.o access/nbtree/nbtutils.o access/nbtree/nbtsort.o access/nbtree/nbtxlog.o access/transam/clog.o access/transam/transam.o access/transam/varsup.o access/transam/xact.o access/transam/xlog.o access/transam/xlogutils.o access/transam/rmgr.o access/transam/slru.o access/transam/subtrans.o access/transam/multixact.o access/transam/twophase.o access/transam/twophase_rmgr.o access/gin/ginutil.o access/gin/gininsert.o access/gin/ginxlog.o access/gin/ginentrypage.o access/gin/gindatapage.o access/gin/ginbtree.o access/gin/ginscan.o access/gin/ginget.o access/gin/ginvacuum.o access/gin/ginarrayproc.o access/gin/ginbulk.o access/gin/ginfast.o bootstrap/bootparse.o bootstrap/bootstrap.o catalog/catalog.o catalog/dependency.o catalog/heap.o catalog/index.o catalog/indexing.o catalog/namespace.o catalog/aclchk.o catalog/pg_aggregate.o catalog/pg_constraint.o catalog/pg_conversion.o catalog/pg_depend.o catalog/pg_enum.o catalog/pg_inherits.o catalog/pg_largeobject.o catalog/pg_namespace.o catalog/pg_operator.o catalog/pg_proc.o catalog/pg_shdepend.o catalog/pg_type.o catalog/storage.o catalog/toasting.o parser/analyze.o parser/gram.o parser/keywords.o parser/parser.o parser/parse_agg.o parser/parse_cte.o parser/parse_clause.o parser/parse_expr.o parser/parse_func.o parser/parse_node.o parser/parse_oper.o parser/parse_relation.o parser/parse_type.o parser/parse_coerce.o parser/parse_target.o parser/parse_utilcmd.o parser/scansup.o parser/kwlookup.o commands/aggregatecmds.o commands/alter.o commands/analyze.o commands/async.o commands/cluster.o commands/comment.o commands/conversioncmds.o commands/copy.o commands/dbcommands.o commands/define.o commands/discard.o commands/explain.o commands/foreigncmds.o commands/functioncmds.o commands/indexcmds.o commands/lockcmds.o commands/operatorcmds.o commands/opclasscmds.o commands/portalcmds.o commands/prepare.o commands/proclang.o commands/schemacmds.o commands/sequence.o commands/tablecmds.o commands/tablespace.o commands/trigger.o commands/tsearchcmds.o commands/typecmds.o commands/user.o commands/vacuum.o commands/vacuumlazy.o commands/variable.o commands/view.o executor/execAmi.o executor/execCurrent.o executor/execGrouping.o executor/execJunk.o executor/execMain.o executor/execProcnode.o executor/execQual.o executor/execScan.o executor/execTuples.o executor/execUtils.o executor/functions.o executor/instrument.o executor/nodeAppend.o executor/nodeAgg.o executor/nodeBitmapAnd.o executor/nodeBitmapOr.o executor/nodeBitmapHeapscan.o executor/nodeBitmapIndexscan.o executor/nodeHash.o executor/nodeHashjoin.o executor/nodeIndexscan.o executor/nodeMaterial.o executor/nodeMergejoin.o executor/nodeNestloop.o executor/nodeFunctionscan.o executor/nodeRecursiveunion.o executor/nodeResult.o executor/nodeSeqscan.o executor/nodeSetOp.o executor/nodeSort.o executor/nodeUnique.o executor/nodeValuesscan.o executor/nodeCtescan.o executor/nodeWorktablescan.o executor/nodeLimit.o executor/nodeGroup.o executor/nodeSubplan.o executor/nodeSubqueryscan.o executor/nodeTidscan.o executor/nodeWindowAgg.o executor/tstoreReceiver.o executor/spi.o foreign/foreign.o lib/dllist.o lib/stringinfo.o libpq/be-fsstubs.o libpq/be-secure.o libpq/auth.o libpq/crypt.o libpq/hba.o libpq/ip.o libpq/md5.o libpq/pqcomm.o libpq/pqformat.o libpq/pqsignal.o main/main.o nodes/nodeFuncs.o nodes/nodes.o nodes/list.o nodes/bitmapset.o nodes/tidbitmap.o nodes/copyfuncs.o nodes/equalfuncs.o nodes/makefuncs.o nodes/outfuncs.o nodes/readfuncs.o nodes/print.o nodes/read.o nodes/params.o nodes/value.o optimizer/geqo/geqo_copy.o optimizer/geqo/geqo_eval.o optimizer/geqo/geqo_main.o optimizer/geqo/geqo_misc.o optimizer/geqo/geqo_mutation.o optimizer/geqo/geqo_pool.o optimizer/geqo/geqo_recombination.o optimizer/geqo/geqo_selection.o optimizer/geqo/geqo_erx.o optimizer/geqo/geqo_pmx.o optimizer/geqo/geqo_cx.o optimizer/geqo/geqo_px.o optimizer/geqo/geqo_ox1.o optimizer/geqo/geqo_ox2.o optimizer/path/allpaths.o optimizer/path/clausesel.o optimizer/path/costsize.o optimizer/path/equivclass.o optimizer/path/indxpath.o optimizer/path/joinpath.o optimizer/path/joinrels.o optimizer/path/orindxpath.o optimizer/path/pathkeys.o optimizer/path/tidpath.o optimizer/plan/createplan.o optimizer/plan/initsplan.o optimizer/plan/planagg.o optimizer/plan/planmain.o optimizer/plan/planner.o optimizer/plan/setrefs.o optimizer/plan/subselect.o optimizer/prep/prepjointree.o optimizer/prep/prepqual.o optimizer/prep/preptlist.o optimizer/prep/prepunion.o optimizer/util/clauses.o optimizer/util/joininfo.o optimizer/util/pathnode.o optimizer/util/placeholder.o optimizer/util/plancat.o optimizer/util/predtest.o optimizer/util/relnode.o optimizer/util/restrictinfo.o optimizer/util/tlist.o optimizer/util/var.o port/dynloader.o port/pg_sema.o port/pg_shmem.o postmaster/autovacuum.o postmaster/bgwriter.o postmaster/fork_process.o postmaster/pgarch.o postmaster/pgstat.o postmaster/postmaster.o postmaster/syslogger.o postmaster/walwriter.o regex/regcomp.o regex/regerror.o regex/regexec.o regex/regfree.o rewrite/rewriteRemove.o rewrite/rewriteDefine.o rewrite/rewriteHandler.o rewrite/rewriteManip.o rewrite/rewriteSupport.o storage/buffer/buf_table.o storage/buffer/buf_init.o storage/buffer/bufmgr.o storage/buffer/freelist.o storage/buffer/localbuf.o storage/file/fd.o storage/file/buffile.o storage/freespace/freespace.o storage/freespace/fsmpage.o storage/freespace/indexfsm.o storage/ipc/ipc.o storage/ipc/ipci.o storage/ipc/pmsignal.o storage/ipc/procarray.o storage/ipc/shmem.o storage/ipc/shmqueue.o storage/ipc/sinval.o storage/ipc/sinvaladt.o storage/large_object/inv_api.o storage/lmgr/lmgr.o storage/lmgr/lock.o storage/lmgr/proc.o storage/lmgr/deadlock.o storage/lmgr/lwlock.o storage/lmgr/spin.o storage/lmgr/s_lock.o storage/page/bufpage.o storage/page/itemptr.o storage/smgr/md.o storage/smgr/smgr.o storage/smgr/smgrtype.o tcop/dest.o tcop/fastpath.o tcop/postgres.o tcop/pquery.o tcop/utility.o tsearch/ts_locale.o tsearch/ts_parse.o tsearch/wparser.o tsearch/wparser_def.o tsearch/dict.o tsearch/dict_simple.o tsearch/dict_synonym.o tsearch/dict_thesaurus.o tsearch/dict_ispell.o tsearch/regis.o tsearch/spell.o tsearch/to_tsany.o tsearch/ts_selfuncs.o tsearch/ts_typanalyze.o tsearch/ts_utils.o utils/adt/acl.o utils/adt/arrayfuncs.o utils/adt/array_userfuncs.o utils/adt/arrayutils.o utils/adt/bool.o utils/adt/cash.o utils/adt/char.o utils/adt/date.o utils/adt/datetime.o utils/adt/datum.o utils/adt/domains.o utils/adt/enum.o utils/adt/float.o utils/adt/format_type.o utils/adt/geo_ops.o utils/adt/geo_selfuncs.o utils/adt/int.o utils/adt/int8.o utils/adt/like.o utils/adt/lockfuncs.o utils/adt/misc.o utils/adt/nabstime.o utils/adt/name.o utils/adt/numeric.o utils/adt/numutils.o utils/adt/oid.o utils/adt/oracle_compat.o utils/adt/pseudotypes.o utils/adt/rowtypes.o utils/adt/regexp.o utils/adt/regproc.o utils/adt/ruleutils.o utils/adt/selfuncs.o utils/adt/tid.o utils/adt/timestamp.o utils/adt/varbit.o utils/adt/varchar.o utils/adt/varlena.o utils/adt/version.o utils/adt/xid.o utils/adt/network.o utils/adt/mac.o utils/adt/inet_net_ntop.o utils/adt/inet_net_pton.o utils/adt/ri_triggers.o utils/adt/pg_lzcompress.o utils/adt/pg_locale.o utils/adt/formatting.o utils/adt/ascii.o utils/adt/quote.o utils/adt/pgstatfuncs.o utils/adt/encode.o utils/adt/dbsize.o utils/adt/genfile.o utils/adt/trigfuncs.o utils/adt/tsginidx.o utils/adt/tsgistidx.o utils/adt/tsquery.o utils/adt/tsquery_cleanup.o utils/adt/tsquery_gist.o utils/adt/tsquery_op.o utils/adt/tsquery_rewrite.o utils/adt/tsquery_util.o utils/adt/tsrank.o utils/adt/tsvector.o utils/adt/tsvector_op.o utils/adt/tsvector_parser.o utils/adt/txid.o utils/adt/uuid.o utils/adt/windowfuncs.o utils/adt/xml.o utils/cache/catcache.o utils/cache/inval.o utils/cache/plancache.o utils/cache/relcache.o utils/cache/syscache.o utils/cache/lsyscache.o utils/cache/typcache.o utils/cache/ts_cache.o utils/error/assert.o utils/error/elog.o utils/fmgr/dfmgr.o utils/fmgr/fmgr.o utils/fmgr/funcapi.o utils/hash/dynahash.o utils/hash/hashfn.o utils/hash/pg_crc.o utils/hash/cmsketch.o utils/init/flatfiles.o utils/init/globals.o utils/init/miscinit.o utils/init/postinit.o utils/mb/encnames.o utils/mb/conv.o utils/mb/mbutils.o utils/mb/wchar.o utils/mb/wstrcmp.o utils/mb/wstrncmp.o utils/misc/guc.o utils/misc/help_config.o utils/misc/pg_rusage.o utils/misc/ps_status.o utils/misc/superuser.o utils/misc/tzparser.o utils/mmgr/aset.o utils/mmgr/mcxt.o utils/mmgr/portalmem.o utils/resowner/resowner.o utils/sort/logtape.o utils/sort/tuplesort.o utils/sort/tuplestore.o utils/time/combocid.o utils/time/tqual.o utils/time/snapmgr.o utils/fmgrtab.o ../../src/timezone/localtime.o ../../src/timezone/strftime.o ../../src/timezone/pgtz.o ../../src/port/libpgport_srv.a -lcrypt -ldl -lm -o postgres
 make[2]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend'
 make -C backend/utils/mb/conversion_procs all
 make[2]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/backend/utils/mb/conversion_procs'
@@ -407,9 +396,9 @@ make[3]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/bin/
 make -C ../../../src/interfaces/libpq all
 make -C ../../../src/port all
 make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/port'
+make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/interfaces/libpq'
 make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/port'
-make[4]: Entering directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/interfaces/libpq'
 make[4]: Nothing to be done for `all'.
 make[4]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/interfaces/libpq'
 make[3]: Leaving directory `/home/ubuntu/CS186/fa12/hw5/postgres-8.4.2/src/bin/psql'
